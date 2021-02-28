@@ -3,14 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-ENV = 'dev'
+ENV = 'prod'
 
 if ENV == 'dev':
     app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URL'] = ''
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Brad3nlive01@localhost/condorm'
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URL'] = ''
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://fogscmxflbvfpn:cdc2900b405304e95b4cae360506a382899386eb3f54c4c2fc24c65734c49622@ec2-54-242-43-231.compute-1.amazonaws.com:5432/d2j0ha8pcp3qr8'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -49,7 +49,7 @@ def submit():
         quantity = request.form['quantity']
         if product == '' or quantity == '':
             return render_template('order.html', message = 'Please enter a valid product or quantity')
-            
+
         data = Orders(product, quantity)
         db.session.add(data)
         db.session.commit()
