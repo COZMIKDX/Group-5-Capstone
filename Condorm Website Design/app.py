@@ -2,6 +2,10 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route('/')
+def mainpage():
+    return render_template('main.html')
+
+@app.route('/main')
 def index():
     return render_template('main.html')
  
@@ -17,7 +21,7 @@ def order():
 def resources():
     return render_template('resources.html')
 
-@app.route('/information')
+@app.route('/update')
 def information():
     return render_template('update.html')
 
