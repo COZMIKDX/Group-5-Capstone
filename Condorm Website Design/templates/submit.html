@@ -56,32 +56,10 @@
         <a href="update">Update Information</a>
         <a href="login">Logout</a>
     </div>
-    <div class = "products">
-        {% if message %}
-            <h3 class="message"> {{ message | safe }}</h3>
-        {% endif %}
-        <form action = "/submit" method = "POST">
-            <div class = "form-group">
-                <label for= "products"> Please select a product:</label>
-                <select name ="products" id ="products">
-                    <option value = "Condoms">Condoms</option>
-                    <option value = "Condoms">Condoms</option>
-                    <option value = "Condoms">Condoms</option>
-                </select>
-            </div>
-            <div class = "form-group">
-                <label for ="quantity"> Please select the quantity:</label>
-                <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
-            </div>
-            <input type = "submit" value= "Place Order" class = "btn">
-        </form>
+    
+    <div class="paragraph">
+        <h3> Thank you! Your order has been placed successfully </h3>
     </div>
-
-<script>
-    function popFunc(){
-        alert("Order placed successfully!");
-    }
-</script>
 
 </body>
 </html>
