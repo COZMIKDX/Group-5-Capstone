@@ -28,11 +28,19 @@ class Orders(db.Model):
 
 @app.route('/')
 def mainpage():
-    return render_template('main.html')
+    return render_template('login.html')
 
-@app.route('/main')
+@app.route('/main', methods= ['POST', 'GET'])
 def index():
-    return render_template('main.html')
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == 'bldresse' and password == 'password123':
+            return render_template('main.html')
+    if request.method == 'GET':
+        return render_template('main.html')
+    return render_template('login.html', message = 'Invalid username or password')
+    
  
 @app.route('/about')
 def about():
@@ -66,6 +74,21 @@ def information():
 @app.route('/registration')
 def registration():
     return render_template('registration.html')
+
+@app.route('/created', methods = ['POST'])
+def created():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        repass = request.form['repass']
+        dormname = request.form['dormname']
+        roomnum = request.form['roomnum']
+        if username == '' or password == '' or dormname == '' or roomnum == '':
+            return render_template('registration.html', message = 'Missing required information!')
+        if repass != password:
+            return render_template('registration.html', message = "Password's do not match up. Try Again!")
+        
+    return render_template('created.html')
     
 if __name__ == "__main__":
     app.run()
