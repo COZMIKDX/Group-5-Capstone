@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
     <style>
-        form {
-            margin-top: 40px;
-            text-align: center;
-        }
         .header {
             padding: 20px;
             background-color: crimson;
@@ -16,33 +12,97 @@
         }
         .signup {
             text-align: center;
+            padding: 10px;
+            margin-top: 8px;
+        }
+        /* Affects the div containing login info boxes, their labels, the submit button, and the signup text.*/
+        .login-group {
+            background-color: #f2f2f2;
+            padding: 2em 2em 2em 2em;
+            width: 25em;
+            text-align: center;
+            margin: auto;
+            margin-top: 10em;
+            margin-bottom: 10em;
+            border-radius: 10%;
+        }
+        .user-input-label {
+            text-align: left;
+            padding-right: 9.5em;
+        }
+        input[type=text]{
+          /*width: 100%;*/
+          padding: 12px 20px;
+          margin: 8px;
+          display: inline-block;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+        }
+        input[type=password]{
+          /*width: 100%;*/
+          padding: 12px 20px;
+          margin: 8px;
+          display: inline-block;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+        }
+        button[type=submit] {
+          width: 10em;
+          background-color: crimson;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+        button[type=submit]:hover {
+          background-color: #b50d2e;
+        }
+        .link-button {
+          text-decoration: none;
+          background-color: crimson;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px;
+          border: none;
+          border-radius: 4px;
+        }
+        .link-button:hover {
+          background-color: #b50d2e;
         }
     </style>
 <body>
     <div class = "header">
     <h1>Condorm Delivery Service</h1>
     </div>
-<div class = "login">
-    {% if message %}
-    <h1 class="message"> {{ message | safe }}</h1>
-    {% endif %}
-    <form action = "/main" method = "POST">
-        <div class = "form-group">
-            <label for= "username"> Username: </label>
-            <input type = "text" id = "username" name = "username"><br>
-            
-            <label for = "password"> Password : </label>
-            <input type = "password" id = "password" name = "password">
+    <div class="login-group">
+        <h2>Login to get your condoms</h2>
+        <div class = "login">
+            {% if message %}
+            <h1 class="message"> {{ message | safe }}</h1>
+            {% endif %}
+            <form action = "/main" method = "POST">
+                <div class = "form-group">
+                    <!--<label class="user-input-label" for= "username"> Username </label><br>-->
+                    <input type = "text" id = "username" name = "username" placeholder="Username"><br>
+
+                    <!--<label class="user-input-label" for = "password"> Password </label><br>-->
+                    <input type = "password" id = "password" name = "password" placeholder="Password">
+                </div>
+                <div class = "form-group">
+                    <!--<input type = "submit" value= "Submit" class = "btn">-->
+                    <button type="submit">Login</button>
+                </div>
+            </form>
         </div>
-        <div class = "form-group">
-            <input type = "submit" value= "Submit" class = "btn">
+        <div class="signup">
+            <!--<a>Don't have an account yet?</a>-->
+            <a href="registration" class="link-button">Click here to signup</a>
         </div>
-    </form>
-</div>
-<div class="signup">
-    <a>Don't have an account yet?</a>
-    <a href="registration">Click here to signup</p>
-</div>
+    </div>
 
 </body>
 </html>
