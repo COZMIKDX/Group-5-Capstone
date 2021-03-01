@@ -2,6 +2,13 @@
 <html>
     <style>
         form {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .header {
+            padding: 20px;
+            background-color: crimson;
+            color: white;
             text-align: center;
         }
         h1 {
@@ -12,21 +19,32 @@
         }
     </style>
 <body>
-    <h1>Condorm Delivery Service</h1>
-<form id="login">
-    <label for="userName">Enter Username: </label>
-    <input type="text" id="userName" name="userName"><br>
-    <label for="password">Enter Password: </label>
-    <input type="text" id="password" name="password"><br>
-    <label>Re-enter Password: </label>
-    <input type="text" id="rePass" name="rePass"><br>
-    <label>Dormitory Name: </label>
-    <input type="text" id="dormName" name="dormName"><br>
-    <label>Dormitory Room Number: </label>
-    <input type="number" id="roomNum" name="roomNum"><br>
-    <input type="submit" value="Create Account">
-</form>
+    <div class = "header">
+        <h1>Condorm Delivery Service</h1>
+    </div>
+    <div class = "registration">
+        {% if message %}
+        <h1 class="message"> {{ message | safe }}</h1>
+        {% endif %}
+    </div>
 
+    <form action = '/created' method = "POST">
+        <div class = create>
+            <label for="username">Enter Username: </label>
+            <input type="text" id="username" name="username"><br>
+            <label for="password">Enter Password: </label>
+            <input type="password" id="password" name="password"><br>
+            <label>Re-enter Password: </label>
+            <input type="password" id="repass" name="repass"><br>
+            <label>Dormitory Name: </label>
+            <input type="text" id="dormname" name="dormname"><br>
+            <label>Dormitory Room Number: </label>
+            <input type="number" id="roomnum" name="roomnum"><br>
+        </div>
+        <div class = "form-group">
+            <input type = "submit" value= "Create Account" class = "btn">
+        </div>
+    </form>
 
 </body>
 </html>

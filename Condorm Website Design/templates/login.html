@@ -2,6 +2,13 @@
 <html>
     <style>
         form {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .header {
+            padding: 20px;
+            background-color: crimson;
+            color: white;
             text-align: center;
         }
         h1 {
@@ -12,17 +19,29 @@
         }
     </style>
 <body>
+    <div class = "header">
     <h1>Condorm Delivery Service</h1>
-<form target="_blank" id="login">
-    <label for="userName">Username: </label>
-    <input type="text" id="userName" name="userName"><br>
-    <label for="password">Password: </label>
-    <input type="text" id="password" name="password"><br>
-    <input type="submit" onclick="window.location.href = 'main.html';" value="Login">
-</form>
+    </div>
+<div class = "login">
+    {% if message %}
+    <h1 class="message"> {{ message | safe }}</h1>
+    {% endif %}
+    <form action = "/main" method = "POST">
+        <div class = "form-group">
+            <label for= "username"> Username: </label>
+            <input type = "text" id = "username" name = "username"><br>
+            
+            <label for = "password"> Password : </label>
+            <input type = "password" id = "password" name = "password">
+        </div>
+        <div class = "form-group">
+            <input type = "submit" value= "Submit" class = "btn">
+        </div>
+    </form>
+</div>
 <div class="signup">
     <a>Don't have an account yet?</a>
-    <a href="registration.html">Click here to signup</p>
+    <a href="registration">Click here to signup</p>
 </div>
 
 </body>
