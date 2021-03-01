@@ -78,17 +78,17 @@ def registration():
 @app.route('/created', methods = ['POST'])
 def created():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        user = request.form['username']
+        passw = request.form['password']
         repass = request.form['repass']
         dormname = request.form['dormname']
         roomnum = request.form['roomnum']
-        if username == '' or password == '' or dormname == '' or roomnum == '':
+        if user == '' or passw == '' or dormname == '' or roomnum == '':
             return render_template('registration.html', message = 'Missing required information!')
-        if repass != password:
+        if repass != passw:
             return render_template('registration.html', message = "Password's do not match up. Try Again!")
-        
-    return render_template('created.html')
+        else:
+            return render_template('created.html')
     
 if __name__ == "__main__":
     app.run()
