@@ -1,50 +1,112 @@
 <!DOCTYPE html>
 <html>
     <style>
-        form {
-            margin-top: 40px;
-            text-align: center;
-        }
-        .header {
+        .title-header {
             padding: 20px;
             background-color: crimson;
             color: white;
             text-align: center;
         }
-        h1 {
+
+        .registration-group {
+            background-color: #f2f2f2;
+            padding: 2em 2em 2em 2em;
+            width: 25em;
             text-align: center;
+            margin: auto;
+            margin-top: 10em;
+            margin-bottom: 10em;
+            border-radius: 10%;
         }
-        .signup {
-            text-align: center;
+        .message {
+            font-family: arial;
+            font-size: 14px;
+        }
+        .user-input-label {
+            text-align: left;
+            padding-right: 9.5em;
+        }
+        input[type=text], input[type=number]{
+          /*width: 100%;*/
+          padding: 12px 20px;
+          margin: 8px;
+          display: inline-block;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+        }
+        input[type=password]{
+          /*width: 100%;*/
+          padding: 12px 20px;
+          margin: 8px;
+          display: inline-block;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+        }
+        button[type=submit] {
+          width: 10em;
+          background-color: crimson;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-family: arial;
+          font-size: 14px;
+        }
+        button[type=submit]:hover {
+          background-color: #b50d2e;
+        }
+        .link-button {
+          text-decoration: none;
+          background-color: crimson;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px;
+          border: none;
+          border-radius: 4px;
+          font-family: arial;
+          font-size: 14px;
+        }
+        .link-button:hover {
+          background-color: #b50d2e;
         }
     </style>
 <body>
-    <div class = "header">
+    <div class="title-header">
         <h1>Condorm Delivery Service</h1>
     </div>
-    <div class = "registration">
-        {% if message %}
-        <h1 class="message"> {{ message | safe }}</h1>
-        {% endif %}
-    </div>
+    <div class="registration-group">
+        <h2>Registration</h2>
 
-    <form action = '/created' method = "POST">
-        <div class = create>
-            <label for="username">Enter Username: </label>
-            <input type="text" id="username" name="username"><br>
-            <label for="password">Enter Password: </label>
-            <input type="password" id="password" name="password"><br>
-            <label>Re-enter Password: </label>
-            <input type="password" id="repass" name="repass"><br>
-            <label>Dormitory Name: </label>
-            <input type="text" id="dormname" name="dormname"><br>
-            <label>Dormitory Room Number: </label>
-            <input type="number" id="roomnum" name="roomnum"><br>
+        <div class="registration-error">
+            {% if message %}
+            <h1 class="message"> {{ message | safe }}</h1>
+            {% endif %}
         </div>
-        <div class = "form-group">
-            <input type = "submit" value= "Create Account" class = "btn">
-        </div>
-    </form>
+
+        <form action = '/created' method = "POST">
+            <div class = create>
+                <!--<label for="username">Enter Username: </label>-->
+                <input type="text" id="username" name="username" placeholder="Username"><br>
+                <!--<label for="password">Enter Password: </label>-->
+                <input type="password" id="password" name="password" placeholder="Password"><br>
+                <!--<label>Re-enter Password: </label>-->
+                <input type="password" id="repass" name="repass" placeholder="Re-enter your password"><br>
+                <!--<label>Dormitory Name: </label>-->
+                <input type="text" id="dormname" name="dormname" placeholder="Dormitory name"><br>
+                <!--label>Dormitory Room Number: </label>-->
+                <input type="number" id="roomnum" name="roomnum" placeholder="Dormitory room number"><br>
+            </div>
+            <div class = "form-group">
+                <!--<input type = "submit" value= "Create Account" class = "btn">-->
+                <button type="submit">Create Account</button>
+                <a href="/" class="link-button">Return to login</a>
+            </div>
+        </form>
+    </div>
 
 </body>
 </html>
