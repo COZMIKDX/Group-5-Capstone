@@ -3,10 +3,9 @@
     <style>
     * {
         margin: 0;
-      
-       
         vertical-align: baseline;
         background: transparent;
+        --sidebar-width: 160px;
     }
         html {
             background: linear-gradient(to bottom, beige, blanchedalmond);
@@ -16,7 +15,7 @@
             width: 100%;
         }
         .header {
-            width: 100%;
+            /*width: 100%;*/
             padding: 20px;
             background-color: crimson;
             color: white;
@@ -28,15 +27,15 @@
         }
         h3 {
             text-align: center;
-            margin-left: 160px;
+            /*margin-left: 160px;*/
         }
         form {
-            text-align: center;
-            margin-left: 160px;
+            text-align: left;
+            /*margin-left: 160px;*/
         }
         .sidebar {
             height: 100%; /* Full-height: remove this if you want "auto" height */
-            width: 160px; /* Set the width of the sidebar */
+            width: var(--sidebar-width); /* Set the width of the sidebar */
             position: fixed; /* Fixed Sidebar (stay in place on scroll) */
             z-index: 1; /* Stay on top */
             top: 0; /* Stay at the top */
@@ -56,12 +55,73 @@
             color: black;
             background-color: rgba(220, 20, 60, 0.541);
         }
+        .products {
+            margin-left: var(--sidebar-width);
+            text-align: center;
+        }
+        .message {
+            text-align: center;
+        }
+        .order-group {
+            background-color: #f2f2f2;
+            padding: 2em 2em 2em 2em;
+            width: 25em;
+            text-align: left;
+            margin: auto;
+            margin-top: 10em;
+            margin-bottom: 10em;
+            border-radius: 10%;
+        }
+        .user-input-label {
+            text-align: left;
+        }
+        select, input[type=number]{
+          background-color: white;
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px;
+          display: inline-block;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+        }
+        input[type=submit] {
+          width: 10em;
+          background-color: crimson;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-family: arial;
+          font-size: 14px;
+        }
+        input[type=submit]:hover {
+          background-color: #b50d2e;
+        }
+        .link-button {
+          text-decoration: none;
+          background-color: crimson;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px;
+          border: none;
+          border-radius: 4px;
+          font-family: arial;
+          font-size: 14px;
+        }
+        .link-button:hover {
+          background-color: #b50d2e;
+        }
+        #quantity {
+            padding-right: 10px; padding-left: 10px
+        }
     </style>
 <body>
     <div class="header">
         <h1>Order</h1>
     </div>
-    
     <div class="sidebar">
         <a href="main">Home</a>
         <a href="order">Order</a>
@@ -74,21 +134,26 @@
         {% if message %}
             <h3 class="message"> {{ message | safe }}</h3>
         {% endif %}
-        <form action = "/submit" method = "POST">
-            <div class = "form-group">
-                <label for= "products"> Please select a product:</label>
-                <select name ="products" id ="products">
-                    <option value = "Condoms">Condoms</option>
-                    <option value = "Condoms">Condoms</option>
-                    <option value = "Condoms">Condoms</option>
-                </select>
-            </div>
-            <div class = "form-group">
-                <label for ="quantity"> Please select the quantity:</label>
-                <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
-            </div>
-            <input type = "submit" value= "Place Order" class = "btn">
-        </form>
+        <div class="order-group">
+            <form action = "/submit" method = "POST" >
+                <div class = "form-group">
+                    <label for= "products" class = user-input-label> Please select a product:</label>
+                    <select name ="products" id ="products">
+                        <option value = "Condoms">Condoms</option>
+                        <option value = "Condoms">Condoms</option>
+                        <option value = "Condoms">Condoms</option>
+                        <option value = "Value Condoms">Value Condoms</option>
+                        <option value = "Inverted Condoms">Inverted Condoms</option>
+                        <option value = "Digital Condoms">Digital Condoms</option>
+                    </select>
+                </div>
+                <div class = "form-group">
+                    <label for ="quantity"> Please select the quantity:</label>
+                    <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
+                </div>
+                <input type = "submit" value= "Place Order" class = "btn">
+            </form>
+        </div>
     </div>
 
 <script>
