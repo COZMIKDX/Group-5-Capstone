@@ -88,6 +88,13 @@
                 <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
             </div>
             <input type = "submit" value= "Place Order" class = "btn">
+            {% for product in products%}
+            <tr>
+                <td>
+                    {{product.product}}
+                </td>
+            </tr>
+            {% endfor %}
         </form>
     </div>
 
