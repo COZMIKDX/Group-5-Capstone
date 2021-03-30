@@ -5,10 +5,11 @@ from forms import *
 
 app = Flask(__name__)
 app.secret_key = 'meme'
-
+#Keep this as dev to modify on local db
 ENV = 'dev'
 if ENV == 'dev':
     app.debug = True
+    #Change link to local db uri with pgadmin
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Brad3nlive01@localhost/condorm'
 else:
     app.debug = False
