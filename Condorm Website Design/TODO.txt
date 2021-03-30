@@ -1,0 +1,17 @@
+Database relationships
+Products -> Orders <- Users
+
+Order Form
+  Allow for Products on DB to be listed on page
+  Image URL stored in Product DB
+  HTML the URL to allow images associated with each product.
+
+Update update.html to allow users to change information.
+Move to Heroku CLI
+Enable Emailing
+Password Hashing
+Make DB reset script
+Adjust app.py and forms.py to not be circular.
+Using Flask-Login to enable different page Views.(Logged in vs. Not Loggin in and Admin Privilages)
+Better Styling
+Clean Up Files
