@@ -346,7 +346,7 @@
                 "sha256:fc16311d5c7737842cd083bf9e02b6d7af406901abd296cae1c055b3b2281eaf"
             ],
             "index": "pypi",
-            "version": "==1.4.4"
+            "version": "==1.3.23"
         },
         "typing-extensions": {
             "hashes": [
