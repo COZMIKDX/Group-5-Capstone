@@ -15,3 +15,5 @@ Adjust app.py and forms.py to not be circular.
 Using Flask-Login to enable different page Views.(Logged in vs. Not Loggin in and Admin Privilages)
 Better Styling
 Clean Up Files
+
+Add ability to have multiple types of items on order
