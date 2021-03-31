@@ -58,18 +58,27 @@
         }
     </style>
 <body>
+
+    <div class="sidebar">
+        <a href="/">Home</a>
+        {% if current_user.is_authenticated %}
+        <a href="order">Order</a>
+        {% endif %}
+        <a href="about">About</a>
+        <a href="resources">Resources</a>
+        {% if current_user.is_authenticated %}
+        <a href="update">Update Information</a>
+        <a href="logout">Logout</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+        <a href="login">Login</a>
+        {% endif %}
+    </div>
+    
     <div class="header">
         <h1>Order</h1>
     </div>
     
-    <div class="sidebar">
-        <a href="main">Home</a>
-        <a href="order">Order</a>
-        <a href="about">About</a>
-        <a href="resources">Resources</a>
-        <a href="update">Update Information</a>
-        <a href="/">Logout</a>
-    </div>
     <div class = "products">
         {% if message %}
             <h3 class="message"> {{ message | safe }}</h3>
