@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user, login_required, logout_user
+from flask_mail import Mail, Message
 from passlib.hash import pbkdf2_sha256
 
 from forms import *
@@ -22,6 +23,13 @@ db = SQLAlchemy(app)
 
 login = LoginManager(app)
 login.init_app(app)
+
+#app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+#app.config['MAIL_PORT'] = 587
+#app.config['MAIL_USE_TLS'] = True
+#app.config['MAIL_USERNAME'] = 'youremail@gmail.com'
+#app.config['MAIL_PASSWORD'] = 'your_email_password'
+#mail = Mail(app)
 
 class User(UserMixin, db.Model):
     __tablename__ = "users"
@@ -149,6 +157,8 @@ def registration():
             return render_template('registration.html', form = reg_form, message = "Someone has taken that username!")
         if email_object:
             return render_template('registration.html', form = reg_form, message = "Someone has taken that email!")
+        #msg = Message("Hello", sender= "no-reply@condormdelivery.com", recipients= [email])
+        #mail.send(msg)
         user = User(username = username,firstname = firstname, lastname = lastname, email = email, password = password_hashed, dormname = dormname, roomnum = roomnum, admin = admin)
         db.session.add(user)
         db.session.commit()

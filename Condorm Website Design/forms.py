@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, IntegerField, Sele
 from wtforms.validators import InputRequired, Email, Length, EqualTo, ValidationError
 from passlib.hash import pbkdf2_sha256
 
-from app import User
+#from app import User
 
 def checker(form, field):
     username_entered = form.username.data

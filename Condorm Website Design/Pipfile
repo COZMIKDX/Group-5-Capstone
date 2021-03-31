@@ -12,6 +12,9 @@ gunicorn = "*"
 flask-wtf = "*"
 "wtforms.validators" = "*"
 email-validator = "*"
+flask-login = "*"
+flask-mail = "*"
+passlib = "*"
 
 [dev-packages]
 
