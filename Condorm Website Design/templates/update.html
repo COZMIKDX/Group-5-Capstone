@@ -57,6 +57,23 @@
         }
     </style>
 <body>
+
+    <div class="sidebar">
+        <a href="/">Home</a>
+        {% if current_user.is_authenticated %}
+        <a href="order">Order</a>
+        {% endif %}
+        <a href="about">About</a>
+        <a href="resources">Resources</a>
+        {% if current_user.is_authenticated %}
+        <a href="update">Update Information</a>
+        <a href="logout">Logout</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+        <a href="login">Login</a>
+        {% endif %}
+    </div>
+    
     <div class="header">
         <h1>Update Information</h1>
     </div>
@@ -67,13 +84,6 @@
    </div>
 
    <form action = 'update' method = "POST">
-    <div>
-        {{ form.username(class_ = 'form-control', placeholder = 'Username')}}
-
-            {% for error in form.username.errors %}
-            <br>{{error}}
-            {% endfor %}
-    </div>
     <div>
         {{ form.dormname(class_ = 'form-control')}}
     </div>
@@ -90,14 +100,6 @@
 
     {{ form.csrf_token }}
    </form>
-    <div class="sidebar">
-        <a href="main">Home</a>
-        <a href="order">Order</a>
-        <a href="about">About</a>
-        <a href="resources">Resources</a>
-        <a href="update">Update Information</a>
-        <a href="/">Logout</a>
-    </div>
 
  
 
