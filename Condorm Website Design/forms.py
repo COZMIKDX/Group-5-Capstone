@@ -34,7 +34,7 @@ class RegistrationForm(FlaskForm):
                 validators=[InputRequired(message = "Password required"),
                 EqualTo('password', message = "Passwords must match")])
     dormname = SelectField('dormname',
-                choices = ['Founders', 'Futrall', 'Gibson','Gregson','Holcombe','Hotz','Humphreys','Pomfret','Reid','Yocum'])
+                choices = ['Adohi', 'Clark', 'Duncan', 'Founders', 'Futrall', 'Gatewood', 'Gibson', 'Gregson', 'Harding', 'Holcombe', 'Hotz', 'Humphreys', 'Maple Hill East', 'Maple Hill South', 'Maple Hill West', 'Morgan', 'Walton', 'Pomfret', 'Reid', 'Yocum'])
     roomnum = IntegerField('roomnum',
                 validators=[InputRequired(message = "Room Number required")])
     submitbtn = SubmitField('Create Account')

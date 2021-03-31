@@ -156,6 +156,21 @@ def registration():
         return redirect(url_for('mainpage'))
     return render_template('registration.html', form = reg_form)
 
+@app.route('/created', methods = ['POST'])
+def created():
+    if request.method == 'POST':
+        user = request.form['username']
+        passw = request.form['password']
+        repass = request.form['repass']
+        dormname = request.form['dormname']
+        roomnum = request.form['roomnum']
+        if user == '' or passw == '' or dormname == '' or roomnum == '':
+            return render_template('registration.html', message = 'Missing required information!')
+        if repass != passw:
+            return render_template('registration.html', message = "Passwords do not match up. Try Again!")
+        else:
+            return render_template('created.html')
+
 @app.route("/logout", methods = ["GET"])
 def logout():
     logout_user()
