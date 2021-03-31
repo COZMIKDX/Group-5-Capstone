@@ -35,6 +35,23 @@
         }
     </style>
 <body>
+    
+    <div class="sidebar">
+        <a href="/">Home</a>
+        {% if current_user.is_authenticated %}
+        <a href="order">Order</a>
+        {% endif %}
+        <a href="about">About</a>
+        <a href="resources">Resources</a>
+        {% if current_user.is_authenticated %}
+        <a href="update">Update Information</a>
+        <a href="logout">Logout</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+        <a href="login">Login</a>
+        {% endif %}
+    </div>
+    
     <div class = "header">
     <h1>Condorm Delivery Service</h1>
     </div>
@@ -42,17 +59,26 @@
     {% if message %}
     <h1 class="message"> {{ message | safe }}</h1>
     {% endif %}
-    <form action = "/main" method = "POST">
-        <div class = "form-group">
-            <label for= "username"> Username: </label>
-            <input type = "text" id = "username" name = "username"><br>
-            
-            <label for = "password"> Password : </label>
-            <input type = "password" id = "password" name = "password">
+    <form action = "login" method = "POST">
+        <div>
+            {{ form.username(class_ = 'form-control', placeholder = 'Username')}}
+
+                {% for error in form.username.errors %}
+                <br>{{error}}
+                {% endfor %}
         </div>
-        <div class = "form-group">
-            <input type = "submit" value= "Submit" class = "btn">
+        <div>
+            {{ form.password(class_ = 'form-control', placeholder =  'Password')}}
+
+                {% for error in form.password.errors %}
+                <br>{{error}}
+                {% endfor %}
         </div>
+        <div>
+            {{form.submitbtn}}
+        </div>
+
+        {{ form.csrf_token }}
     </form>
 </div>
 <div class="signup">
