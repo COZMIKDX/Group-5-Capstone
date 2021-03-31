@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, IntegerField, SelectField, SubmitField
 from wtforms.validators import InputRequired, Email, Length, EqualTo, ValidationError
-#from app import User
+from app import User
 
 def checker(form, field):
     username_entered = form.username.data

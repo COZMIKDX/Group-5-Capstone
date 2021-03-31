@@ -10,7 +10,7 @@ ENV = 'dev'
 if ENV == 'dev':
     app.debug = True
     #Change link to local db uri with pgadmin
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Brad3nlive01@localhost/condorm'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:J0shua@localhost/ConDorm'
 else:
     app.debug = False
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://fogscmxflbvfpn:cdc2900b405304e95b4cae360506a382899386eb3f54c4c2fc24c65734c49622@ec2-54-242-43-231.compute-1.amazonaws.com:5432/d2j0ha8pcp3qr8'
@@ -141,7 +141,7 @@ def created():
         if user == '' or passw == '' or dormname == '' or roomnum == '':
             return render_template('registration.html', message = 'Missing required information!')
         if repass != passw:
-            return render_template('registration.html', message = "Password's do not match up. Try Again!")
+            return render_template('registration.html', message = "Passwords do not match up. Try Again!")
         else:
             return render_template('created.html')
     
