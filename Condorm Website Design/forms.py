@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, IntegerField, SelectField, SubmitField
 from wtforms.validators import InputRequired, Email, Length, EqualTo, ValidationError
-#from app import User
+
+from app import User
 
 def checker(form, field):
     username_entered = form.username.data
@@ -32,7 +33,7 @@ class RegistrationForm(FlaskForm):
                 validators=[InputRequired(message = "Password required"),
                 EqualTo('password', message = "Passwords must match")])
     dormname = SelectField('dormname',
-                choices = ['Adohi', 'Clark', 'Duncan', 'Founders', 'Futrall', 'Gatewood', 'Gibson', 'Gregson', 'Harding', 'Holcombe', 'Hotz', 'Humphreys', 'Maple Hill East', 'Maple Hill South', 'Maple Hill West', 'Morgan', 'Walton', 'Pomfret', 'Reid', 'Yocum'])
+                choices = ['Founders', 'Futrall', 'Gibson','Gregson','Holcombe','Hotz','Humphreys','Pomfret','Reid','Yocum'])
     roomnum = IntegerField('roomnum',
                 validators=[InputRequired(message = "Room Number required")])
     submitbtn = SubmitField('Create Account')
@@ -44,3 +45,10 @@ class LoginForm(FlaskForm):
                 validators=[InputRequired(message = "Password required"),
                 checker])
     submitbtn = SubmitField('Login')
+
+class UpdateForm(FlaskForm):
+    dormname = SelectField('dormname',
+                choices = ['Founders', 'Futrall', 'Gibson','Gregson','Holcombe','Hotz','Humphreys','Pomfret','Reid','Yocum'])
+    roomnum = IntegerField('roomnum',
+                validators=[InputRequired(message = "Room Number required")])
+    submitbtn = SubmitField('Update Information')

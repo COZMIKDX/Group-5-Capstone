@@ -60,26 +60,36 @@
     <div class="header">
         <h1>Update Information</h1>
     </div>
-    <form id="product">
-        <label>Please select a dorm: </label>
-      <input list="products" name="product">
-      <datalist id="products">
-          <option value="Hotz"></option>
-          <option value="Hump Dump"></option>
-          <option value="Yocum"></option>
-      </datalist>
-      <br>
-      <label>Please enter new room number: </label>
-      <input type="number" id="roomNum" name="roomNum">
-      <br>
-      <input type="submit" onclick="popFunc()" value="Update">
-    </form>
-    
-    <script>
-        function popFunc(){
-            alert("Order placed successfully!");
-        }
-    </script>
+   <div class = "updateinfo">
+        {% if message %}
+        <h1 class = "message"> {{ message | safe}} </h1>
+        {% endif %}
+   </div>
+
+   <form action = 'update' method = "POST">
+    <div>
+        {{ form.username(class_ = 'form-control', placeholder = 'Username')}}
+
+            {% for error in form.username.errors %}
+            <br>{{error}}
+            {% endfor %}
+    </div>
+    <div>
+        {{ form.dormname(class_ = 'form-control')}}
+    </div>
+    <div>
+        {{ form.roomnum(class_ = 'form-control', placeholder = 'Room Number')}}
+
+            {% for error in form.roomnum.errors %}
+            <br>{{error}}
+            {% endfor %}
+    </div>
+    <div>
+        {{form.submitbtn}}
+    </div>
+
+    {{ form.csrf_token }}
+   </form>
     <div class="sidebar">
         <a href="main">Home</a>
         <a href="order">Order</a>
