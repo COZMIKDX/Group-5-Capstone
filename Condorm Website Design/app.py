@@ -3,6 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user, login_required, logout_user
 from passlib.hash import pbkdf2_sha256
 
+from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
 from forms import *
 
 app = Flask(__name__)
@@ -12,7 +18,7 @@ app.secret_key = 'meme'
 ENV = 'dev'
 if ENV == 'dev':
     app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Brad3nlive01@localhost/condorm'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:J0shua@localhost/condorm'
 else:
     app.debug = False
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://fogscmxflbvfpn:cdc2900b405304e95b4cae360506a382899386eb3f54c4c2fc24c65734c49622@ec2-54-242-43-231.compute-1.amazonaws.com:5432/d2j0ha8pcp3qr8'
@@ -34,6 +40,7 @@ class User(UserMixin, db.Model):
     dormname = db.Column(db.String(), nullable = False)
     roomnum = db.Column(db.Integer(), nullable = False)
     admin = db.Column(db.Boolean(), nullable = False)
+    children = relationship("Orders")
 
     def __init__(self, username, firstname, lastname, email, password, dormname, roomnum, admin):
         self.username = username
@@ -48,9 +55,12 @@ class User(UserMixin, db.Model):
 class Orders(db.Model):
     __tablename__ = "orders"
     id = db.Column(db.Integer, unique = True, primary_key = True)
-    #Person id
-    #Product id(s)
-    #Status
+    user_id = Column(db.Integer, ForeignKey('users.id'))
+    user = relationship("User", back_populates="children")
+    product_id = Column(db.Integer, ForeignKey('products.id'))
+    # This only includes the ID for a single product. We will implement expansions to that later.
+    user = relationship("Product", back_populates="children")
+    status = db.Column(db.Boolean(), nullable = False)
 
     def __init__(self, product, quantity):
         self.product = product
@@ -61,6 +71,7 @@ class Products(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     product = db.Column(db.String(200))
     quantity = db.Column(db.Integer)
+    children = relationship("Orders")
 
     def __init__(self, product, quantity):
         self.product = product
