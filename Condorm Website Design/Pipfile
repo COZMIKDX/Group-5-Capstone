@@ -15,6 +15,7 @@ email-validator = "*"
 flask-login = "*"
 flask-mail = "*"
 passlib = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 
