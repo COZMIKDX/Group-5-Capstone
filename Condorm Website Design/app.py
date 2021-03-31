@@ -10,7 +10,7 @@ app = Flask(__name__)
 #something crazy later
 app.secret_key = 'meme'
 
-ENV = 'dev'
+ENV = 'prod'
 if ENV == 'dev':
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Brad3nlive01@localhost/condorm'
