@@ -10,7 +10,7 @@ app = Flask(__name__)
 #something crazy later
 app.secret_key = 'meme'
 
-ENV = 'prod'
+ENV = 'dev'
 if ENV == 'dev':
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Brad3nlive01@localhost/condorm'
@@ -88,8 +88,13 @@ def mainpage():
     login_form = LoginForm()
     if login_form.validate_on_submit():
         user_object = User.query.filter_by(username=login_form.username.data).first()
-        login_user(user_object)
-        return redirect(url_for('index'))
+        if not user_object:
+            return render_template('login.html', form = login_form, message = "Incorrect username or password")
+        if pbkdf2_sha256.verify(login_form.password.data, user_object.password): 
+            login_user(user_object)
+            return redirect(url_for('index'))
+        else:
+            return render_template('login.html', form = login_form, message = "Incorrect username or password")
     return render_template('login.html', form = login_form)
     
  
