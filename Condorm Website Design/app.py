@@ -15,8 +15,8 @@ app = Flask(__name__)
 #something crazy later
 app.secret_key = 'meme'
 
-ENV = 'dev'
-if ENV == 'dev':
+development_mode = True
+if development_mode:
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:J0shua@localhost/condorm'
 else:
@@ -29,17 +29,18 @@ db = SQLAlchemy(app)
 login = LoginManager(app)
 login.init_app(app)
 
+
 class User(UserMixin, db.Model):
     __tablename__ = "users"
-    id = db.Column(db.Integer, unique = True, primary_key = True)
-    username = db.Column(db.String(20), unique = True, nullable = False)
-    firstname = db.Column(db.String(), nullable = False)
-    lastname = db.Column(db.String(), nullable = False)
-    email = db.Column(db.String(50), unique = True, nullable = False)
-    password = db.Column(db.String(), nullable = False)
-    dormname = db.Column(db.String(), nullable = False)
-    roomnum = db.Column(db.Integer(), nullable = False)
-    admin = db.Column(db.Boolean(), nullable = False)
+    id = db.Column(db.Integer, unique=True, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    firstname = db.Column(db.String(), nullable=False)
+    lastname = db.Column(db.String(), nullable=False)
+    email = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(), nullable=False)
+    dormname = db.Column(db.String(), nullable=False)
+    roomnum = db.Column(db.Integer(), nullable=False)
+    admin = db.Column(db.Boolean(), nullable=False)
     children = relationship("Orders")
 
     def __init__(self, username, firstname, lastname, email, password, dormname, roomnum, admin):
@@ -52,15 +53,16 @@ class User(UserMixin, db.Model):
         self.roomnum = roomnum
         self.admin = admin
 
+
 class Orders(db.Model):
     __tablename__ = "orders"
-    id = db.Column(db.Integer, unique = True, primary_key = True)
+    id = db.Column(db.Integer, unique=True, primary_key=True)
     user_id = Column(db.Integer, ForeignKey('users.id'))
     user = relationship("User", back_populates="children")
     product_id = Column(db.Integer, ForeignKey('products.id'))
     # This only includes the ID for a single product. We will implement expansions to that later.
     user = relationship("Product", back_populates="children")
-    status = db.Column(db.Boolean(), nullable = False)
+    status = db.Column(db.Boolean(), nullable=False)
 
     def __init__(self, product, quantity):
         self.product = product
@@ -68,7 +70,7 @@ class Orders(db.Model):
 
 class Products(db.Model):
     __tablename__ = "products"
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     product = db.Column(db.String(200))
     quantity = db.Column(db.Integer)
     children = relationship("Orders")
@@ -82,29 +84,31 @@ class Products(db.Model):
 def load_user(id):
     return User.query.get(int(id))
 
-@app.route('/', methods = ['POST', 'GET'])
+@app.route('/', methods=['POST', 'GET'])
 def index():
     return render_template('main.html')
 
-@app.route('/login', methods = ['POST', 'GET'])
+@app.route('/login', methods=['POST', 'GET'])
 def mainpage():
     login_form = LoginForm()
     if login_form.validate_on_submit():
         user_object = User.query.filter_by(username=login_form.username.data).first()
         login_user(user_object)
         return redirect(url_for('index'))
-    return render_template('login.html', form = login_form)
-    
- 
+    return render_template('login.html', form=login_form)
+
+
 @app.route('/about')
 def about():
     return render_template('about.html')
+
 
 @app.route('/order')
 def order():
     if not current_user.is_authenticated:
         return "Please login to place an order"
     return render_template('order.html')
+
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -118,25 +122,28 @@ def submit():
         db.session.add(data)
         db.session.commit()
         return render_template('submit.html')
-    
+
+
 @app.route('/resources')
 def resources():
     return render_template('resources.html')
 
-@app.route('/update', methods = ['GET', 'POST'])
+
+@app.route('/update', methods=['GET', 'POST'])
 def information():
     update_form = UpdateForm()
     if update_form.validate_on_submit():
         username = current_user.username
         dormname = update_form.dormname.data
         roomnum = update_form.roomnum.data
-        user_object = User.query.filter_by(username = username).first()
+        user_object = User.query.filter_by(username=username).first()
         user_object.dormname = dormname
         user_object.roomnum = roomnum
         db.session.commit()
-    return render_template('update.html', form = update_form)
+    return render_template('update.html', form=update_form)
 
-@app.route('/registration', methods = ['GET', 'POST'])
+
+@app.route('/registration', methods=['GET', 'POST'])
 def registration():
 
     reg_form = RegistrationForm()
@@ -157,17 +164,17 @@ def registration():
         email_object = User.query.filter_by(email = email).first()
 
         if user_object:
-            return render_template('registration.html', form = reg_form, message = "Someone has taken that username!")
+            return render_template('registration.html', form=reg_form, message="Someone has taken that username!")
         if email_object:
-            return render_template('registration.html', form = reg_form, message = "Someone has taken that email!")
-        user = User(username = username,firstname = firstname, lastname = lastname, email = email, password = password_hashed, dormname = dormname, roomnum = roomnum, admin = admin)
+            return render_template('registration.html', form=reg_form, message="Someone has taken that email!")
+        user = User(username=username, firstname=firstname, lastname=lastname, email=email, password=password_hashed, dormname=dormname, roomnum=roomnum, admin=admin)
         db.session.add(user)
         db.session.commit()
 
         return redirect(url_for('mainpage'))
-    return render_template('registration.html', form = reg_form)
+    return render_template('registration.html', form=reg_form)
 
-@app.route('/created', methods = ['POST'])
+@app.route('/created', methods=['POST'])
 def created():
     if request.method == 'POST':
         user = request.form['username']
@@ -176,9 +183,9 @@ def created():
         dormname = request.form['dormname']
         roomnum = request.form['roomnum']
         if user == '' or passw == '' or dormname == '' or roomnum == '':
-            return render_template('registration.html', message = 'Missing required information!')
+            return render_template('registration.html', message="Missing required information!")
         if repass != passw:
-            return render_template('registration.html', message = "Passwords do not match up. Try Again!")
+            return render_template('registration.html', message="Passwords do not match up. Try Again!")
         else:
             return render_template('created.html')
 
