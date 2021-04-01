@@ -3,6 +3,8 @@
     <style>
     * {
         margin: 0;
+      
+       
         vertical-align: baseline;
         background: transparent;
         --sidebar-width: 160px;
@@ -119,43 +121,53 @@
         }
     </style>
 <body>
+
+    <div class="sidebar">
+        <a href="/">Home</a>
+        {% if current_user.is_authenticated %}
+        <a href="order">Order</a>
+        {% endif %}
+        <a href="about">About</a>
+        <a href="resources">Resources</a>
+        {% if current_user.is_authenticated %}
+        <a href="update">Update Information</a>
+        <a href="logout">Logout</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+        <a href="login">Login</a>
+        {% endif %}
+    </div>
+
     <div class="header">
         <h1>Order</h1>
     </div>
-    <div class="sidebar">
-        <a href="main">Home</a>
-        <a href="order">Order</a>
-        <a href="about">About</a>
-        <a href="resources">Resources</a>
-        <a href="update">Update Information</a>
-        <a href="/">Logout</a>
-    </div>
+
     <div class = "products">
         {% if message %}
             <h3 class="message"> {{ message | safe }}</h3>
         {% endif %}
-        <div class="order-group">
-            <form action = "/submit" method = "POST" >
-                <div class = "form-group">
-                    <label for= "products" class = user-input-label> Please select a product:</label>
-                    <select name ="products" id ="products">
-                        <option value = "Condoms">Condoms</option>
-                        <option value = "Condoms">Condoms</option>
-                        <option value = "Condoms">Condoms</option>
-                        <option value = "Value Condoms">Value Condoms</option>
-                        <option value = "Inverted Condoms">Inverted Condoms</option>
-                        <option value = "Digital Condoms">Digital Condoms</option>
-                        <option value = "Analog Condoms">Analog Condoms</option>
-                        <option value = "Automatic Condoms">Automatic Condoms</option>
-                    </select>
-                </div>
-                <div class = "form-group">
-                    <label for ="quantity"> Please select the quantity:</label>
-                    <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
-                </div>
-                <input type = "submit" value= "Place Order" class = "btn">
-            </form>
-        </div>
+        <form action = "/submit" method = "POST">
+            <div class = "form-group">
+                <label for= "products"> Please select a product:</label>
+                <select name ="products" id ="products">
+                    <option value = "Condoms">Condoms</option>
+                    <option value = "Condoms">Condoms</option>
+                    <option value = "Condoms">Condoms</option>
+                </select>
+            </div>
+            <div class = "form-group">
+                <label for ="quantity"> Please select the quantity:</label>
+                <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
+            </div>
+            <input type = "submit" value= "Place Order" class = "btn">
+            {% for product in products%}
+            <tr>
+                <td>
+                    {{product.product}}
+                </td>
+            </tr>
+            {% endfor %}
+        </form>
     </div>
 
 <script>

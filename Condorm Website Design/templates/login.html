@@ -7,8 +7,8 @@
         }
         * {
         margin: 0;
-
-
+      
+       
         vertical-align: baseline;
         background: transparent;
     }
@@ -24,6 +24,7 @@
             padding: 20px;
             background-color: crimson;
             color: white;
+            
             text-align: center;
         }
         h1 {
@@ -103,34 +104,56 @@
         }
     </style>
 <body>
+
+    <div class="sidebar">
+        <a href="/">Home</a>
+        {% if current_user.is_authenticated %}
+        <a href="order">Order</a>
+        {% endif %}
+        <a href="about">About</a>
+        <a href="resources">Resources</a>
+        {% if current_user.is_authenticated %}
+        <a href="update">Update Information</a>
+        <a href="logout">Logout</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+        <a href="login">Login</a>
+        {% endif %}
+    </div>
+
     <div class = "header">
     <h1>Condorm Delivery Service</h1>
     </div>
-    <div class="login-group">
-        <h2>Login to get your condoms</h2>
-        <div class = "login">
-            {% if message %}
-            <h1 class="message"> {{ message | safe }}</h1>
-            {% endif %}
-            <form action = "/main" method = "POST">
-                <div class = "form-group">
-                    <!--<label class="user-input-label" for= "username"> Username </label><br>-->
-                    <input type = "text" id = "username" name = "username" placeholder="Username"><br>
+<div class = "login">
+    {% if message %}
+    <h1 class="message"> {{ message | safe }}</h1>
+    {% endif %}
+    <form action = "login" method = "POST">
+        <div>
+            {{ form.username(class_ = 'form-control', placeholder = 'Username')}}
 
-                    <!--<label class="user-input-label" for = "password"> Password </label><br>-->
-                    <input type = "password" id = "password" name = "password" placeholder="Password">
-                </div>
-                <div class = "form-group">
-                    <!--<input type = "submit" value= "Submit" class = "btn">-->
-                    <input type="submit" value="Login">
-                </div>
-            </form>
+                {% for error in form.username.errors %}
+                <br>{{error}}
+                {% endfor %}
         </div>
-        <div class="signup">
-            <!--<a>Don't have an account yet?</a>-->
-            <a href="registration" class="link-button">Click here to signup</a>
+        <div>
+            {{ form.password(class_ = 'form-control', placeholder =  'Password')}}
+
+                {% for error in form.password.errors %}
+                <br>{{error}}
+                {% endfor %}
         </div>
-    </div>
+        <div>
+            {{form.submitbtn}}
+        </div>
+
+        {{ form.csrf_token }}
+    </form>
+</div>
+<div class="signup">
+    <a>Don't have an account yet?</a>
+    <a href="registration">Click here to signup</p>>
+</div>
 
 </body>
 </html>

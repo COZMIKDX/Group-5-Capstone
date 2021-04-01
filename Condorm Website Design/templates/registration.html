@@ -92,37 +92,96 @@
         }
     </style>
 <body>
-    <div class="header">
+
+    <div class="sidebar">
+        <a href="/">Home</a>
+        {% if current_user.is_authenticated %}
+        <a href="order">Order</a>
+        {% endif %}
+        <a href="about">About</a>
+        <a href="resources">Resources</a>
+        {% if current_user.is_authenticated %}
+        <a href="update">Update Information</a>
+        <a href="logout">Logout</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+        <a href="login">Login</a>
+        {% endif %}
+    </div>
+
+    <div class = "header">
         <h1>Condorm Delivery Service</h1>
     </div>
     <div class="registration-group">
         <h2>Registration</h2>
-
         <div class="registration-error">
             {% if message %}
             <h1 class="message"> {{ message | safe }}</h1>
             {% endif %}
         </div>
 
-        <form action = '/created' method = "POST">
-            <div class = create>
-                <!--<label for="username">Enter Username: </label>-->
-                <input type="text" id="username" name="username" placeholder="Username"><br>
-                <!--<label for="password">Enter Password: </label>-->
-                <input type="password" id="password" name="password" placeholder="Password"><br>
-                <!--<label>Re-enter Password: </label>-->
-                <input type="password" id="repass" name="repass" placeholder="Re-enter your password"><br>
-                <!--<label>Dormitory Name: </label>-->
-                <input type="text" id="dormname" name="dormname" placeholder="Dormitory name"><br>
-                <!--label>Dormitory Room Number: </label>-->
-                <input type="number" id="roomnum" name="roomnum" placeholder="Dormitory room number"><br>
-            </div>
-            <div class = "form-group">
-                <!--<input type = "submit" value= "Create Account" class = "btn">-->
-                <input type="submit" value="Create Account">
-                <a href="/" class="link-button">Return to login</a>
-            </div>
-        </form>
+    <form action = 'registration' method = "POST">
+        <div>
+            {{ form.username(class_ = 'form-control', placeholder = 'Username')}}
+
+                {% for error in form.username.errors %}
+                <br>{{error}}
+                {% endfor %}
+        </div>
+        <div>
+            {{ form.firstname(class_ = 'form-control', placeholder = 'First Name')}}
+
+                {% for error in form.firstname.errors %}
+                <br>{{error}}
+                {% endfor %}
+        </div>
+        <div>
+            {{ form.lastname(class_ = 'form-control', placeholder = 'Last Name')}}
+
+                {% for error in form.lastname.errors %}
+                <br>{{error}}
+                {% endfor %}
+        </div>
+        <div>
+            {{ form.email(class_ = 'form-control', placeholder = 'Email')}}
+
+                {% for error in form.email.errors %}
+                <br>{{error}}
+                {% endfor %}
+
+        </div>
+        <div>
+            {{ form.password(class_ = 'form-control', placeholder =  'Password')}}
+
+                {% for error in form.password.errors %}
+                <br>{{error}}
+                {% endfor %}
+
+        </div>
+        <div>
+            {{ form.repass(class_ = 'form-control', placeholder = 'Retype Password')}}
+
+                {% for error in form.repass.errors %}
+                <br>{{error}}
+                {% endfor %}
+
+        </div>
+        <div>
+            {{ form.dormname(class_ = 'form-control')}}
+        </div>
+        <div>
+            {{ form.roomnum(class_ = 'form-control', placeholder = 'Room Number')}}
+
+                {% for error in form.roomnum.errors %}
+                <br>{{error}}
+                {% endfor %}
+        </div>
+        <div>
+            {{form.submitbtn}}
+        </div>
+
+        {{ form.csrf_token }}
+    </form>
     </div>
 
 </body>
