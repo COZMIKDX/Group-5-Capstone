@@ -15,7 +15,7 @@ email-validator = "*"
 flask-login = "*"
 flask-mail = "*"
 passlib = "*"
-sqlalchemy = "*"
+sqlalchemy = "==1.3.23"
 
 [dev-packages]
 
