@@ -2,18 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, IntegerField, SelectField, SubmitField
 from wtforms.validators import InputRequired, Email, Length, EqualTo, ValidationError
 from passlib.hash import pbkdf2_sha256
-
-from app import User
-
-def checker(form, field):
-    username_entered = form.username.data
-    password_entered = field.data
-
-    user_object = User.query.filter_by(username = username_entered).first()
-    if user_object is None:
-        raise ValidationError("Username or password is incorrect")
-    elif not pbkdf2_sha256.verify(password_entered, user_object.password):
-        raise ValidationError("Username or password is incorrect")
     
 class RegistrationForm(FlaskForm):
     username = StringField('username', 
@@ -43,8 +31,7 @@ class LoginForm(FlaskForm):
     username = StringField('username', 
                 validators=[InputRequired(message = "Username required")])
     password = PasswordField('password', 
-                validators=[InputRequired(message = "Password required"),
-                checker])
+                validators=[InputRequired(message = "Password required")])
     submitbtn = SubmitField('Login')
 
 class UpdateForm(FlaskForm):

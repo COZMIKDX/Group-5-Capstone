@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user, login_required, logout_user
+from flask_mail import Mail, Message
 from passlib.hash import pbkdf2_sha256
 
 from forms import *
@@ -9,19 +10,26 @@ app = Flask(__name__)
 #something crazy later
 app.secret_key = 'meme'
 
-ENV = 'dev'
+ENV = 'prod'
 if ENV == 'dev':
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Brad3nlive01@localhost/condorm'
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://fogscmxflbvfpn:cdc2900b405304e95b4cae360506a382899386eb3f54c4c2fc24c65734c49622@ec2-54-242-43-231.compute-1.amazonaws.com:5432/d2j0ha8pcp3qr8'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://zafiblysdeutxn:8e4232b39ad16ce2bde93eeb79cd2036e01943b33fde788521f4358ee0520145@ec2-54-164-22-242.compute-1.amazonaws.com:5432/d7dpc8egbb7s3t'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 login = LoginManager(app)
 login.init_app(app)
+
+#app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+#app.config['MAIL_PORT'] = 587
+#app.config['MAIL_USE_TLS'] = True
+#app.config['MAIL_USERNAME'] = 'youremail@gmail.com'
+#app.config['MAIL_PASSWORD'] = 'your_email_password'
+#mail = Mail(app)
 
 class User(UserMixin, db.Model):
     __tablename__ = "users"
@@ -80,8 +88,13 @@ def mainpage():
     login_form = LoginForm()
     if login_form.validate_on_submit():
         user_object = User.query.filter_by(username=login_form.username.data).first()
-        login_user(user_object)
-        return redirect(url_for('index'))
+        if not user_object:
+            return render_template('login.html', form = login_form, message = "Incorrect username or password")
+        if pbkdf2_sha256.verify(login_form.password.data, user_object.password): 
+            login_user(user_object)
+            return redirect(url_for('index'))
+        else:
+            return render_template('login.html', form = login_form, message = "Incorrect username or password")
     return render_template('login.html', form = login_form)
     
  
@@ -149,6 +162,8 @@ def registration():
             return render_template('registration.html', form = reg_form, message = "Someone has taken that username!")
         if email_object:
             return render_template('registration.html', form = reg_form, message = "Someone has taken that email!")
+        #msg = Message("Hello", sender= "no-reply@condormdelivery.com", recipients= [email])
+        #mail.send(msg)
         user = User(username = username,firstname = firstname, lastname = lastname, email = email, password = password_hashed, dormname = dormname, roomnum = roomnum, admin = admin)
         db.session.add(user)
         db.session.commit()
