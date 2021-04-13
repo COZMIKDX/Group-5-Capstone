@@ -68,11 +68,13 @@ class Orders(db.Model):
         self.product = product
         self.quantity = quantity
 
+
 class Products(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
     product = db.Column(db.String(200))
     quantity = db.Column(db.Integer)
+    image = db.Column(db.String(100))
     children = relationship("Orders")
 
     def __init__(self, product, quantity):
@@ -116,7 +118,7 @@ def submit():
         product = request.form['products']
         quantity = request.form['quantity']
         if product == '' or quantity == '':
-            return render_template('order.html', message = 'Please enter a valid product or quantity')
+            return render_template('order.html', message='Please enter a valid product or quantity')
 
         data = Orders(product, quantity)
         db.session.add(data)
@@ -189,11 +191,11 @@ def created():
         else:
             return render_template('created.html')
 
-@app.route("/logout", methods = ["GET"])
+@app.route("/logout", methods=["GET"])
 def logout():
     logout_user()
     return render_template('main.html')
-    
+
+
 if __name__ == "__main__":
     app.run()
-    
