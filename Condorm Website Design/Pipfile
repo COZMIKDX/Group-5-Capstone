@@ -12,6 +12,10 @@ gunicorn = "*"
 flask-wtf = "*"
 "wtforms.validators" = "*"
 email-validator = "*"
+flask-login = "*"
+flask-mail = "*"
+passlib = "*"
+sqlalchemy = "==1.3.23"
 
 [dev-packages]
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <style>
-    * {
+         * {
         margin: 0;
       
        
@@ -20,7 +20,7 @@
             padding: 20px;
             background-color: crimson;
             color: white;
-            margin-left: 60px;
+            margin-left: 160px;
             text-align: center;
         }
         h1 {
@@ -28,7 +28,6 @@
         }
         h3 {
             text-align: center;
-            margin-left: 160px;
         }
         form {
             text-align: center;
@@ -76,37 +75,42 @@
     </div>
     
     <div class="header">
-        <h1>Order</h1>
+        <h1>Add a New Product</h1>
     </div>
-    
-    <div class = "products">
+   <div class = "newproductinfo">
         {% if message %}
-            <h3 class="message"> {{ message | safe }}</h3>
+        <h1 class = "message"> {{ message | safe}} </h1>
         {% endif %}
-        <form action = "/submit" method = "POST">
-            <div class = "form-group">
-                    {% for prod in products %}
-                    <label for= "products"> Please select a product:
-                        <input type="radio" id="products" name="products" value="products">
-                    </label>
-                    <label for ="quantity"> Please select the quantity:
-                        <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
-                    </label>
-                    <input type = "submit" value= "Place Order">
-                    {{prod.id}}
-                    {{prod.product}}
-                    <img src = "{{prod.image}}"> <!-- FIX IMAGE -->
-                    
-                    {% endfor %}
-            </div>
-        </form>
+   </div>
+
+   <form method = "POST">
+    <div>
+        {{ form.productname(class_ = 'form-control', placeholder = 'Product Name')}}
+    </div>
+    <div>
+        {{ form.quantity(class_ = 'form-control')}}
+
+            {% for error in form.quantity.errors %}
+            <br>{{error}}
+            {% endfor %}
     </div>
 
-<script>
-    function popFunc(){
-        alert("Order placed successfully!");
-    }
-</script>
+    <div>
+        {{ form.image(class_ = 'form-control')}}
+
+            {% for error in form.image.errors %}
+            <br>{{error}}
+            {% endfor %}
+    </div>
+
+    <div>
+        {{form.submitbtn}}
+    </div>
+
+    {{ form.csrf_token }}
+   </form>
+
+ 
 
 </body>
 </html>

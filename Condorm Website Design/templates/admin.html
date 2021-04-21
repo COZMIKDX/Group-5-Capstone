@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <!-- This is a comment 
     <style>
     * {
         margin: 0;
@@ -57,6 +58,7 @@
             background-color: rgba(220, 20, 60, 0.541);
         }
     </style>
+    -->
 <body>
 
     <div class="sidebar">
@@ -76,37 +78,15 @@
     </div>
     
     <div class="header">
-        <h1>Order</h1>
-    </div>
-    
-    <div class = "products">
-        {% if message %}
-            <h3 class="message"> {{ message | safe }}</h3>
-        {% endif %}
-        <form action = "/submit" method = "POST">
-            <div class = "form-group">
-                    {% for prod in products %}
-                    <label for= "products"> Please select a product:
-                        <input type="radio" id="products" name="products" value="products">
-                    </label>
-                    <label for ="quantity"> Please select the quantity:
-                        <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
-                    </label>
-                    <input type = "submit" value= "Place Order">
-                    {{prod.id}}
-                    {{prod.product}}
-                    <img src = "{{prod.image}}"> <!-- FIX IMAGE -->
-                    
-                    {% endfor %}
-            </div>
-        </form>
-    </div>
+        <h1>Admin</h1>
+    <form action = "orderlist" method="GET">
+        <input type = "submit" value = "Order List">
+    </form>
+    <form action = "products" method="GET">
+        <input type = "submit" value = "Products List">
+    </form>
 
-<script>
-    function popFunc(){
-        alert("Order placed successfully!");
-    }
-</script>
+    </div>
 
 </body>
 </html>
