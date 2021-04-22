@@ -6,7 +6,7 @@
             text-align: center;
         }
         * {
-        margin: 0;
+        /*margin: 0;*/
         vertical-align: baseline;
         background: transparent;
     }
@@ -14,61 +14,129 @@
             background: linear-gradient(to bottom, beige, blanchedalmond);
             background-size: cover;
             background-repeat: no-repeat;
-            height: 100%;
-            width: 100%;
-        }
-        .header {
-            /*width: 100%;*/ /* This was causing the weird white space to the left and the accompanying horizontal scrollbar */
-            padding: 20px;
-            background-color: crimson;
-            color: white;
-            text-align: center;
+            /*height: 100%;
+            width: 100%;*/
         }
         h1 {
             text-align: center;
+            margin: 0;
         }
         .message {
             font-family: arial;
             font-size: 14px;
         }
-        .sidebar {
-            height: 100%; /* Full-height: remove this if you want "auto" height */
-            width: 160px; /* Set the width of the sidebar */
-            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-            z-index: 1; /* Stay on top */
-            top: 0; /* Stay at the top */
-            left: 0;
-            background-color: crimson; /* Black */
-            overflow-x: hidden; /* Disable horizontal scroll */
-            padding-top: 20px;
-        }
-        .sidebar a {
-            padding: 6px 8px 6px 16px;
-            text-decoration: none;
-            font-size: 25px;
-            color: white;
-            display: block;
-        }
-        .sidebar a:hover {
-            color: black;
-            background-color: rgba(220, 20, 60, 0.541);
-        }
+
         .signup {
             text-align: center;
             padding: 10px;
             margin-top: 8px;
         }
+        /* Make anchors look like buttons */
+        .link-button {
+          display: inline-block;
+          text-decoration: none;
+          background-color: crimson;
+          color: white;
+          width: 10em;
+          padding: 14px 0px;
+          margin: 0px;
+          border: none;
+          border-radius: 4px;
+          font-family: arial;
+          font-size: 14px;
+        }
+        /* Something like applying some css to a thing of this class whenever you hover over it.
+        .link-button:hover {
+          background-color: #b50d2e;
+        }*/
+
+
+        .container {
+            display: grid;
+            height: 100vh;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr .5fr 10fr;
+            grid-template-areas:
+            "header header header"
+            "navbar navbar navbar"
+            "login-group login-group login-group"
+        }
+        #navbar {
+            grid-area: navbar;
+            background-color: crimson;
+
+            overflow-x: hidden; /* Disable horizontal scroll */
+            /*padding-top: 20px;
+            padding-left: 0;
+            padding-right: 0;
+            padding-bottom: 0;*/
+        }
+        #header {
+            grid-area: header;
+
+            height: 37px;
+            padding: 20px;
+            margin: 0;
+            background-color: crimson;
+            color: white;
+            text-align: center;
+        }
         /* Affects the div containing login info boxes, their labels, the submit button, and the signup text.*/
-        .login-group {
+        #login-group {
+            grid-area: login-group;
+
             background-color: #f2f2f2;
             padding: 2em 2em 2em 2em;
             width: 25em;
             text-align: center;
             margin: auto;
             margin-top: 10em;
-            margin-bottom: 10em;
+            /*margin-bottom: 10em;*/
             border-radius: 10%;
         }
+
+        /* navigation bar CSS Grid stuff */
+        .navbar-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-areas:
+            "home about resources login"
+            margin:0;
+            text-align: center;
+        }
+        #home {
+            grid-area: home
+        }
+        #about {
+            grid-area: about
+        }
+        #resources {
+            grid-area: resources
+        }
+        #login {
+            grid-area: login;
+        }
+        #navbar-ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            display: inline;
+            text-align: center:
+        }
+        #navbar a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: white;
+            display: block;
+        }
+        #navbar a:hover {
+            color: black;
+            background-color: #9c0b28;
+        }
+
+        /* For text next to input text boxes. */
         .user-input-label {
             text-align: left;
             padding-right: 9.5em;
@@ -113,6 +181,7 @@
           background-color: crimson;
           color: white;
           width: 10em;
+          height: 18px;
           padding: 14px 0px;
           margin: 0px;
           border: none;
@@ -120,64 +189,58 @@
           font-family: arial;
           font-size: 14px;
         }
-        /* Something like applying some css to a thing of this class whenever you hover over it.
-        .link-button:hover {
-          background-color: #b50d2e;
-        }
-        .username {
-
-        }
     </style>
 <body>
+    <div class="container">
+        <div id="navbar">
+            <ul id="navbar-ul" class="navbar-grid">
+                <li id="home"><a href="/">Home</a></li>
+                {% if current_user.is_authenticated %}
+                <li id="order"><a href="order">Order</a></li>
+                {% endif %}
+                <li id="about"><a href="about">About</a></li>
+                <li id="resources"><a href="resources">Resources</a></li>
+                {% if current_user.is_authenticated %}
+                <li id="update"><a href="update">Update Information</a></li>
+                <li id="logout"><a href="logout">Logout</a></li>
+                {% endif %}
+                {% if not current_user.is_authenticated %}
+                <li id="login"><a href="login">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
 
-    <div class="sidebar">
-        <a href="/">Home</a>
-        {% if current_user.is_authenticated %}
-        <a href="order">Order</a>
-        {% endif %}
-        <a href="about">About</a>
-        <a href="resources">Resources</a>
-        {% if current_user.is_authenticated %}
-        <a href="update">Update Information</a>
-        <a href="logout">Logout</a>
-        {% endif %}
-        {% if not current_user.is_authenticated %}
-        <a href="login">Login</a>
-        {% endif %}
+        <div id="header">
+        <h1>Condorm Delivery Service</h1>
+        </div>
+        <div id="login-group">
+            {% if message %}
+            <h1 class="message"> {{ message | safe }}</h1>
+            {% endif %}
+            <form action = "login" method = "POST">
+                <div class="username">
+                    {{ form.username(class_ = 'form-control', placeholder = 'Username')}}
+
+                        {% for error in form.username.errors %}
+                        <br>{{error}}
+                        {% endfor %}
+                </div>
+                <div>
+                    {{ form.password(class_ = 'form-control', placeholder =  'Password')}}
+
+                        {% for error in form.password.errors %}
+                        <br>{{error}}
+                        {% endfor %}
+                </div>
+                <div>
+                    {{form.submitbtn}}
+                </div>
+
+                {{ form.csrf_token }}
+            </form>
+
+            <a class="link-button" href="registration">Signup</p></a>
+        </div>
     </div>
-
-    <div class = "header">
-    <h1>Condorm Delivery Service</h1>
-    </div>
-<div class="login-group">
-    {% if message %}
-    <h1 class="message"> {{ message | safe }}</h1>
-    {% endif %}
-    <form action = "login" method = "POST">
-        <div class="username">
-            {{ form.username(class_ = 'form-control', placeholder = 'Username')}}
-
-                {% for error in form.username.errors %}
-                <br>{{error}}
-                {% endfor %}
-        </div>
-        <div>
-            {{ form.password(class_ = 'form-control', placeholder =  'Password')}}
-
-                {% for error in form.password.errors %}
-                <br>{{error}}
-                {% endfor %}
-        </div>
-        <div>
-            {{form.submitbtn}}
-        </div>
-
-        {{ form.csrf_token }}
-    </form>
-
-    <a class="link-button" href="registration">Signup</p></a>
-</div>
-
-
 </body>
 </html>
