@@ -1,197 +1,105 @@
 <!DOCTYPE html>
 <html>
-    <style>
-        form {
-            margin-top: 40px;
-            text-align: center;
-        }
-        * {
-        margin: 0;
-        vertical-align: baseline;
-        background: transparent;
-        }
-        html {
-            background: linear-gradient(to bottom, beige, blanchedalmond);
-            background-size: cover;
-            background-repeat: no-repeat;
-            height: 100%;
-            width: 100%;
-        }
-        .header {
-            width: 100%;
-            padding: 20px;
-            background-color: crimson;
-            color: white;
-            text-align: center;
-        }
-
-        .registration-group {
-            background-color: #f2f2f2;
-            padding: 2em 2em 2em 2em;
-            width: 25em;
-            text-align: center;
-            margin: auto;
-            margin-top: 10em;
-            margin-bottom: 10em;
-            border-radius: 10%;
-        }
-        .message {
-            font-family: arial;
-            font-size: 14px;
-        }
-        .user-input-label {
-            text-align: left;
-            padding-right: 9.5em;
-        }
-        input[type=text], input[type=number]{
-          width: 17em;
-          padding: 12px 20px;
-          margin: 8px;
-          display: inline-block;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          box-sizing: border-box;
-        }
-        input[type=password]{
-          width: 17em;
-          padding: 12px 20px;
-          margin: 8px;
-          display: inline-block;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          box-sizing: border-box;
-        }
-        input[type=submit] {
-          width: 10em;
-          background-color: crimson;
-          color: white;
-          padding: 14px 20px;
-          margin: 8px;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-family: arial;
-          font-size: 14px;
-        }
-        /* The dropdown menu for selecting a dorm. */
-        select {
-          width: 17em;
-          padding: 12px 20px;
-          margin: 8px;
-          display: inline-block;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          box-sizing: border-box;
-        }
-        button[type=submit]:hover {
-          background-color: #b50d2e;
-        }
-        .link-button {
-          text-decoration: none;
-          background-color: crimson;
-          color: white;
-          padding: 14px 20px;
-          margin: 8px;
-          border: none;
-          border-radius: 4px;
-          font-family: arial;
-          font-size: 14px;
-        }
-        .link-button:hover {
-          background-color: #b50d2e;
-        }
-    </style>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/registration.css') }}">
+    </head>
 <body>
 
-    <div class="sidebar">
-        <a href="/">Home</a>
-        {% if current_user.is_authenticated %}
-        <a href="order">Order</a>
-        {% endif %}
-        <a href="about">About</a>
-        <a href="resources">Resources</a>
-        {% if current_user.is_authenticated %}
-        <a href="update">Update Information</a>
-        <a href="logout">Logout</a>
-        {% endif %}
-        {% if not current_user.is_authenticated %}
-        <a href="login">Login</a>
-        {% endif %}
-    </div>
-
-    <div class = "header">
-        <h1>Condorm Delivery Service</h1>
-    </div>
-    <div class="registration-group">
-        <h2>Registration</h2>
-        <div class="registration-error">
-            {% if message %}
-            <h1 class="message"> {{ message | safe }}</h1>
-            {% endif %}
+    <div class="container">
+        <div id="navbar">
+            <ul id="navbar-ul" class="navbar-grid">
+                <li id="home"><a href="/">Home</a></li>
+                {% if current_user.is_authenticated %}
+                <li id="order"><a href="order">Order</a></li>
+                {% endif %}
+                <li id="about"><a href="about">About</a></li>
+                <li id="resources"><a href="resources">Resources</a></li>
+                {% if current_user.is_authenticated %}
+                <li id="update"><a href="update">Update Information</a></li>
+                <li id="logout"><a href="logout">Logout</a></li>
+                {% endif %}
+                {% if not current_user.is_authenticated %}
+                <li id="login"><a href="login">Login</a></li>
+                {% endif %}
+            </ul>
         </div>
 
-    <form action = 'registration' method = "POST">
-        <div>
-            {{ form.username(class_ = 'form-control', placeholder = 'Username')}}
-
-                {% for error in form.username.errors %}
-                <br>{{error}}
-                {% endfor %}
+        <div id = "header">
+            <h1>Condorm Delivery Service</h1>
         </div>
-        <div>
-            {{ form.firstname(class_ = 'form-control', placeholder = 'First Name')}}
+        <div id="registration-group">
+            <h2>Registration</h2>
+            <div class="registration-error">
+                {% if message %}
+                <h1 class="message"> {{ message | safe }}</h1>
+                {% endif %}
+            </div>
 
-                {% for error in form.firstname.errors %}
-                <br>{{error}}
-                {% endfor %}
+        <form action = 'registration' method = "POST">
+            <div>
+                {{ form.username(class_ = 'form-control', placeholder = 'Username')}}
+
+                    {% for error in form.username.errors %}
+                    <br>{{error}}
+                    {% endfor %}
+            </div>
+            <div>
+                {{ form.firstname(class_ = 'form-control', placeholder = 'First Name')}}
+
+                    {% for error in form.firstname.errors %}
+                    <br>{{error}}
+                    {% endfor %}
+            </div>
+            <div>
+                {{ form.lastname(class_ = 'form-control', placeholder = 'Last Name')}}
+
+                    {% for error in form.lastname.errors %}
+                    <br>{{error}}
+                    {% endfor %}
+            </div>
+            <div>
+                {{ form.email(class_ = 'form-control', placeholder = 'Email')}}
+
+                    {% for error in form.email.errors %}
+                    <br>{{error}}
+                    {% endfor %}
+
+            </div>
+            <div>
+                {{ form.password(class_ = 'form-control', placeholder =  'Password')}}
+
+                    {% for error in form.password.errors %}
+                    <br>{{error}}
+                    {% endfor %}
+
+            </div>
+            <div>
+                {{ form.repass(class_ = 'form-control', placeholder = 'Retype Password')}}
+
+                    {% for error in form.repass.errors %}
+                    <br>{{error}}
+                    {% endfor %}
+
+            </div>
+            <div>
+                {{ form.dormname(class_ = 'form-control')}}
+            </div>
+            <div>
+                {{ form.roomnum(class_ = 'form-control', placeholder = 'Room Number')}}
+
+                    {% for error in form.roomnum.errors %}
+                    <br>{{error}}
+                    {% endfor %}
+            </div>
+            <div>
+                {{form.submitbtn}}
+            </div>
+
+            {{ form.csrf_token }}
+        </form>
         </div>
-        <div>
-            {{ form.lastname(class_ = 'form-control', placeholder = 'Last Name')}}
-
-                {% for error in form.lastname.errors %}
-                <br>{{error}}
-                {% endfor %}
-        </div>
-        <div>
-            {{ form.email(class_ = 'form-control', placeholder = 'Email')}}
-
-                {% for error in form.email.errors %}
-                <br>{{error}}
-                {% endfor %}
-
-        </div>
-        <div>
-            {{ form.password(class_ = 'form-control', placeholder =  'Password')}}
-
-                {% for error in form.password.errors %}
-                <br>{{error}}
-                {% endfor %}
-
-        </div>
-        <div>
-            {{ form.repass(class_ = 'form-control', placeholder = 'Retype Password')}}
-
-                {% for error in form.repass.errors %}
-                <br>{{error}}
-                {% endfor %}
-
-        </div>
-        <div>
-            {{ form.dormname(class_ = 'form-control')}}
-        </div>
-        <div>
-            {{ form.roomnum(class_ = 'form-control', placeholder = 'Room Number')}}
-
-                {% for error in form.roomnum.errors %}
-                <br>{{error}}
-                {% endfor %}
-        </div>
-        <div>
-            {{form.submitbtn}}
-        </div>
-
-        {{ form.csrf_token }}
-    </form>
     </div>
 
 </body>
