@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <title>Order</title>
+    <!-- This is a comment 
     <style>
     * {
         margin: 0;
@@ -58,6 +58,7 @@
             background-color: rgba(220, 20, 60, 0.541);
         }
     </style>
+    -->
 <body>
 
     <div class="sidebar">
@@ -77,53 +78,18 @@
     </div>
     
     <div class="header">
-        <h1>Order</h1>
+        <h1>Admin</h1>
+    <form action = "orderlist" method="GET">
+        <input type = "submit" value = "Orders List">
+    </form>
+    <form action = "products" method="GET">
+        <input type = "submit" value = "Products List">
+    </form>
+    <form action = "users" method="GET">
+        <input type = "submit" value = "Users List">
+    </form>
+
     </div>
-    
-    <div class = "products">
-        {% if message %}
-            <h3 class="message"> {{ message | safe }}</h3>
-        {% endif %}
-        <form action = "/submit" method = "POST">
-            <div class = "form-group">
-                <label>Please select a product:</label>
-                    <select name = "products" id = "products" onchange = "selectChange()">
-                        {% for prod in products %}
-                        {% if prod.quantity > 0%}
-                        <option value = "{{prod.id}}">{{prod.product}}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
-                    <label for = "quantity"> Please select the quantity:
-                        <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
-                    </label>
-                    <div id="itemImage">
-                        <img src = {{products.0.image}} height = "200" width = "200">
-                    </div>
-                    <input type = "submit" value = "Place Order">
-                    <br>
-            </div>
-        </form>
-    </div>
-
-<script>
-    function selectChange(){ 
-        var id = document.getElementById("products").value;
-        //imageSwap();
-        document.getElementById("itemImage").innerHTML = ""; 
-    }
-
-    function imageSwap(){
-        var selected = document.getElementById("products").selectedIndex;
-        
-        var image = products.selected.image;
-        document.getElementById("itemImage").innerHTML = image; 
-    }
-
-    function popFunc(){
-        alert("Order placed successfully!");
-    }
-</script>
 
 </body>
 </html>

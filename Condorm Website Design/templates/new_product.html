@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
-    <title>Order</title>
     <style>
-    * {
+         * {
         margin: 0;
       
        
@@ -21,7 +20,7 @@
             padding: 20px;
             background-color: crimson;
             color: white;
-            margin-left: 60px;
+            margin-left: 160px;
             text-align: center;
         }
         h1 {
@@ -29,7 +28,6 @@
         }
         h3 {
             text-align: center;
-            margin-left: 160px;
         }
         form {
             text-align: center;
@@ -77,53 +75,42 @@
     </div>
     
     <div class="header">
-        <h1>Order</h1>
+        <h1>Add a New Product</h1>
     </div>
-    
-    <div class = "products">
+   <div class = "newproductinfo">
         {% if message %}
-            <h3 class="message"> {{ message | safe }}</h3>
+        <h1 class = "message"> {{ message | safe}} </h1>
         {% endif %}
-        <form action = "/submit" method = "POST">
-            <div class = "form-group">
-                <label>Please select a product:</label>
-                    <select name = "products" id = "products" onchange = "selectChange()">
-                        {% for prod in products %}
-                        {% if prod.quantity > 0%}
-                        <option value = "{{prod.id}}">{{prod.product}}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
-                    <label for = "quantity"> Please select the quantity:
-                        <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
-                    </label>
-                    <div id="itemImage">
-                        <img src = {{products.0.image}} height = "200" width = "200">
-                    </div>
-                    <input type = "submit" value = "Place Order">
-                    <br>
-            </div>
-        </form>
+   </div>
+
+   <form method = "POST">
+    <div>
+        {{ form.productname(class_ = 'form-control', placeholder = 'Product Name')}}
+    </div>
+    <div>
+        {{ form.quantity(class_ = 'form-control', placeholder = 'Quantity')}}
+
+            {% for error in form.quantity.errors %}
+            <br>{{error}}
+            {% endfor %}
     </div>
 
-<script>
-    function selectChange(){ 
-        var id = document.getElementById("products").value;
-        //imageSwap();
-        document.getElementById("itemImage").innerHTML = ""; 
-    }
+    <div>
+        {{ form.image(class_ = 'form-control', placeholder = 'Image Link')}}
 
-    function imageSwap(){
-        var selected = document.getElementById("products").selectedIndex;
-        
-        var image = products.selected.image;
-        document.getElementById("itemImage").innerHTML = image; 
-    }
+            {% for error in form.image.errors %}
+            <br>{{error}}
+            {% endfor %}
+    </div>
 
-    function popFunc(){
-        alert("Order placed successfully!");
-    }
-</script>
+    <div>
+        {{form.submitbtn}}
+    </div>
+
+    {{ form.csrf_token }}
+   </form>
+
+ 
 
 </body>
 </html>
