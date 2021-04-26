@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <title>Order</title>
     <style>
     * {
         margin: 0;
@@ -85,24 +86,38 @@
         {% endif %}
         <form action = "/submit" method = "POST">
             <div class = "form-group">
-                    {% for prod in products %}
-                    <label for= "products"> Please select a product:
-                        <input type="radio" id="products" name="products" value="products">
-                    </label>
-                    <label for ="quantity"> Please select the quantity:
+                <label>Please select a product:</label>
+                    <select name = "products" id = "products" onchange = "selectChange()">
+                        {% for prod in products %}
+                        <option value = "{{prod.id}}">{{prod.product}}</option>
+                        {% endfor %}
+                    </select>
+                    <label for = "quantity"> Please select the quantity:
                         <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
                     </label>
-                    <input type = "submit" value= "Place Order">
-                    {{prod.id}}
-                    {{prod.product}}
-                    <img src = "{{prod.image}}"> <!-- FIX IMAGE -->
-                    
-                    {% endfor %}
+                    <div id="itemImage">
+                        <img src = {{products.0.image}} height = "200" width = "200">
+                    </div>
+                    <input type = "submit" value = "Place Order">
+                    <br>
             </div>
         </form>
     </div>
 
 <script>
+    function selectChange(){ 
+        var id = document.getElementById("products").value;
+        //imageSwap();
+        document.getElementById("itemImage").innerHTML = ""; 
+    }
+
+    function imageSwap(){
+        var selected = document.getElementById("products").selectedIndex;
+        
+        var image = products.selected.image;
+        document.getElementById("itemImage").innerHTML = image; 
+    }
+
     function popFunc(){
         alert("Order placed successfully!");
     }

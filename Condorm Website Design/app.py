@@ -19,7 +19,7 @@ app.secret_key = 'meme'
 ENV = 'dev'
 if ENV == 'dev':
     app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Brad3nlive01@localhost/condorm'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:J0shua@localhost/ConDorm'
 else:
     app.debug = False
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://zafiblysdeutxn:8e4232b39ad16ce2bde93eeb79cd2036e01943b33fde788521f4358ee0520145@ec2-54-164-22-242.compute-1.amazonaws.com:5432/d7dpc8egbb7s3t'
@@ -71,9 +71,9 @@ class Orders(db.Model):
     user = relationship("Products", back_populates="children")
     status = db.Column(db.Boolean(), nullable=False)
 
-    def __init__(self, user_id, product, quantity, status):
+    def __init__(self, user_id, product_id, quantity, status):
         self.user_id = user_id
-        self.product = product
+        self.product_id = product_id
         self.quantity = quantity
         self.status = status
 
@@ -132,12 +132,11 @@ def submit():
         product = request.form['products']
         quantity = request.form['quantity']
         status = False
-        prodid = Products.query.filter_by(product = product)
 
         if product == '' or quantity == '':
             return render_template('order.html', message = 'Please enter a valid product or quantity')
 
-        data = Orders(user_id, prodid, quantity, status)
+        data = Orders(user_id, product, quantity, status)
         db.session.add(data)
         db.session.commit()
         return render_template('submit.html')
