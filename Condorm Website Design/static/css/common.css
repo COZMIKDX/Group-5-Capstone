@@ -93,31 +93,19 @@ select {
 .container {
     display: grid;
     height: 100vh;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr .5fr 10fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.5r 10fr;
     grid-template-areas:
-    "header header header"
-    "navbar navbar navbar"
-    "content content content";
-}
-#navbar {
-    grid-area: navbar;
-    background-color: crimson;
-    border-radius: 5px;
-    height: 35px;
-    overflow-x: hidden; /* Disable horizontal scroll */
-    /*padding-top: 20px;
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0;*/
+    "header"
+    "content";
 }
 #header {
     grid-area: header;
-    height: 37px;
+    /*height: 37px;*/
     padding: 20px;
     margin: 0;
     background-color: #383852;
-    border-radius: 5px;
+    border-radius: 10px;
     color: white;
     text-align: center;
     font-family: 'Source Sans Pro', sans-serif;
@@ -128,6 +116,27 @@ select {
 }
 */
 
+
+.header-grid {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr .5fr;
+    grid-template-areas:
+    "header-text"
+    "navbar";
+}
+#navbar {
+    grid-area: navbar;
+    /*background-color: crimson;*/
+    border-radius: 5px;
+    height: 35px;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    /*padding-top: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;*/
+}
 
 /* navigation bar CSS Grid stuff */
 .navbar-grid {
@@ -177,7 +186,7 @@ li {
 }
 #navbar a:hover {
     color: black;
-    background-color: #9c0b28;
+    background-color: #52527f /*#9c0b28;*/
 }
 
 /* General page info squircle */

@@ -4,11 +4,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <div id="navbar">
+
+        <div id="header" class="header-grid">
+            <h1 id="header-text">Condorm Delivery Service</h1>
+
+            <div id="navbar">
             <ul id="navbar-ul" class="navbar-grid">
                 <li id="home"><a href="/">Home</a></li>
                 {% if current_user.is_authenticated %}
@@ -25,8 +29,6 @@
                 {% endif %}
             </ul>
         </div>
-        <div id="header">
-            <h1>Condorm Delivery Service</h1>
         </div>
         <div id="content">
             <div id="info">
