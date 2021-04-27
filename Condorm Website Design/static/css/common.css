@@ -160,6 +160,9 @@ select {
 #home {
     grid-area: home
 }
+#order {
+    grid-area: order
+}
 #about {
     grid-area: about
 }
