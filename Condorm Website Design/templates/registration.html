@@ -3,7 +3,7 @@
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/registration.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
     </head>
 <body>
 
@@ -17,7 +17,9 @@
                 {% if current_user.is_authenticated %}
                 <li id="order"><a href="order">Order</a></li>
                 {% endif %}
+                {% if not current_user.admin %}
                 <li id="about"><a href="about">About</a></li>
+                {% endif %}
                 <li id="resources"><a href="resources">Resources</a></li>
                 {% if current_user.is_authenticated %}
                 <li id="update"><a href="update">Update Information</a></li>
@@ -26,10 +28,13 @@
                 {% if not current_user.is_authenticated %}
                 <li id="login"><a href="login">Login</a></li>
                 {% endif %}
+                {% if current_user.admin %}
+                <li id="admin"><a href="admin">Admin</a></li>
+                {% endif %}
             </ul>
         </div>
         </div>
-        <div id="registration-group">
+        <div id="form-group">
             <h2>Registration</h2>
             <div class="registration-error">
                 {% if message %}

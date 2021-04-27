@@ -1,107 +1,68 @@
 <!DOCTYPE html>
 <html>
-    <style>
-         * {
-        margin: 0;
-      
-       
-        vertical-align: baseline;
-        background: transparent;
-    }
-        html {
-            background: linear-gradient(to bottom, beige, blanchedalmond);
-            background-size: cover;
-            background-repeat: no-repeat;
-            height: 100%;
-            width: 100%;
-        }
-        .header {
-            width: 100%;
-            padding: 20px;
-            background-color: crimson;
-            color: white;
-            margin-left: 160px;
-            text-align: center;
-        }
-        h1 {
-            text-align: center;
-        }
-        h3 {
-            text-align: center;
-        }
-        form {
-            text-align: center;
-            margin-left: 160px;
-        }
-        .sidebar {
-            height: 100%; /* Full-height: remove this if you want "auto" height */
-            width: 160px; /* Set the width of the sidebar */
-            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-            z-index: 1; /* Stay on top */
-            top: 0; /* Stay at the top */
-            left: 0;
-            background-color: crimson; /* Black */
-            overflow-x: hidden; /* Disable horizontal scroll */
-            padding-top: 20px;
-        }
-        .sidebar a {
-            padding: 6px 8px 6px 16px;
-            text-decoration: none;
-            font-size: 25px;
-            color: white;
-            display: block;
-        }
-        .sidebar a:hover {
-            color: black;
-            background-color: rgba(220, 20, 60, 0.541);
-        }
-    </style>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/update.css') }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400&display=swap" rel="stylesheet">
+</head>
 <body>
+<div class="container">
+    <div id="header" class="header-grid">
+        <h1 id="header-text">Update Information</h1>
 
-    <div class="sidebar">
-        <a href="/">Home</a>
-        {% if current_user.is_authenticated %}
-        <a href="order">Order</a>
-        {% endif %}
-        <a href="about">About</a>
-        <a href="resources">Resources</a>
-        {% if current_user.is_authenticated %}
-        <a href="update">Update Information</a>
-        <a href="logout">Logout</a>
-        {% endif %}
-        {% if not current_user.is_authenticated %}
-        <a href="login">Login</a>
-        {% endif %}
+        <div id="navbar">
+        <ul id="navbar-ul" class="navbar-grid">
+            <li id="home"><a href="/">Home</a></li>
+            {% if current_user.is_authenticated %}
+            <li id="order"><a href="order">Order</a></li>
+            {% endif %}
+            {% if not current_user.admin %}
+            <li id="about"><a href="about">About</a></li>
+            {% endif %}
+            <li id="resources"><a href="resources">Resources</a></li>
+            {% if current_user.is_authenticated %}
+            <li id="update"><a href="update">Update Information</a></li>
+            <li id="logout"><a href="logout">Logout</a></li>
+            {% endif %}
+            {% if not current_user.is_authenticated %}
+            <li id="login"><a href="login">Login</a></li>
+            {% endif %}
+            {% if current_user.admin %}
+            <li id="admin"><a href="admin">Admin</a></li>
+            {% endif %}
+        </ul>
+        </div>
+        </div>
+
+    <div id="form-group">
+       <div class = "updateinfo">
+            {% if message %}
+            <h1 class = "message"> {{ message | safe}} </h1>
+            {% endif %}
+       </div>
+
+       <form action = 'update' method = "POST">
+        <div>
+            {{ form.dormname(class_ = 'form-control')}}
+        </div>
+        <div>
+            {{ form.roomnum(class_ = 'form-control', placeholder = 'Room Number')}}
+
+                {% for error in form.roomnum.errors %}
+                <br>{{error}}
+                {% endfor %}
+        </div>
+        <div>
+            {{form.submitbtn}}
+        </div>
+
+        {{ form.csrf_token }}
+       </form>
     </div>
-    
-    <div class="header">
-        <h1>Update Information</h1>
-    </div>
-   <div class = "updateinfo">
-        {% if message %}
-        <h1 class = "message"> {{ message | safe}} </h1>
-        {% endif %}
-   </div>
 
-   <form action = 'update' method = "POST">
-    <div>
-        {{ form.dormname(class_ = 'form-control')}}
-    </div>
-    <div>
-        {{ form.roomnum(class_ = 'form-control', placeholder = 'Room Number')}}
-
-            {% for error in form.roomnum.errors %}
-            <br>{{error}}
-            {% endfor %}
-    </div>
-    <div>
-        {{form.submitbtn}}
-    </div>
-
-    {{ form.csrf_token }}
-   </form>
-
- 
-
+</div>
 </body>
 </html>

@@ -149,7 +149,7 @@ select {
     grid-auto-columns: auto;
     grid-template-rows: 35px;
     grid-template-areas:
-    "home about resources login update logout";
+    "home about resources login update admin logout";
     text-align: center;
     font-family: 'Source Sans Pro', sans-serif;
 }
@@ -170,6 +170,9 @@ select {
 }
 #logout {
     grid-area: logout;
+}
+#admin {
+    grid-area: admin;
 }
 #navbar-ul {
     list-style-type: none;
