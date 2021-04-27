@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user, login_required, logout_user
 from flask_mail import Mail, Message
@@ -16,13 +16,13 @@ app = Flask(__name__)
 #something crazy later
 app.secret_key = 'meme'
 
-ENV = 'dev'
+ENV = 'prod'
 if ENV == 'dev':
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Brad3nlive01@localhost/condorm'
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://zafiblysdeutxn:8e4232b39ad16ce2bde93eeb79cd2036e01943b33fde788521f4358ee0520145@ec2-54-164-22-242.compute-1.amazonaws.com:5432/d7dpc8egbb7s3t'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://kbqbgcqghvqwul:11d356f3b6f22a190cc58e471855f90f73bc107ae29a120e4dc245c224d8a024@ec2-52-87-107-83.compute-1.amazonaws.com:5432/davsklgj1tk9eo'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -121,7 +121,8 @@ def about():
 @app.route('/order')
 def order():
     if not current_user.is_authenticated:
-        return "Please login to place an order" #Error Message#
+        flash("Please login to place an order")
+        return redirect(url_for('index'))
     products = Products.query.all()
     return render_template('order.html', products = products)
 
@@ -143,8 +144,8 @@ def submit():
             db.session.add(data)
             db.session.commit()
         else:
-            return "not enough"
-            #Error Message not enough quantity#
+            flash("There is not enough inventory for that product. Try again!")
+            return render_template('order.html')
         return render_template('submit.html')
     
 @app.route('/resources')
@@ -199,14 +200,24 @@ def registration():
 
 @app.route("/admin", methods = ['GET', 'POST'])
 def admin():
+    if not current_user.is_authenticated:
+        flash("Please login to access page.")
+        return redirect(url_for('index'))
     if current_user.admin == False:
-        return str(current_user.admin) #ERROR MESSAGE + ADD LOGIN REQUIREMENT#
+        flash("You don't have access to this page.")
+
     return render_template('admin.html')
 
 @app.route("/orderlist", methods = ['GET', 'POST'])
 def orderlist():
     #if current_user.admin == False:
         #return str(current_user.admin) #ERROR MESSAGE + ADD LOGIN REQUIREMENT#
+    if not current_user.is_authenticated:
+        flash("Please login to access page.")
+        return redirect(url_for('index'))
+    if current_user.admin == False:
+        flash("You don't have access to this page.")
+
     if request.method == "POST":
         orderid = request.form['ordern']
         order_object = Orders.query.filter_by(id = orderid).first()
@@ -220,6 +231,12 @@ def orderlist():
 def products():
     #if current_user.admin == False:
         #return str(current_user.admin) #ERROR MESSAGE + ADD LOGIN REQUIREMENT#
+    if not current_user.is_authenticated:
+        flash("Please login to access page.")
+        return redirect(url_for('index'))
+    if current_user.admin == False:
+        flash("You don't have access to this page.")
+
     if request.method == 'POST':
         productid = request.form['productn']
         product_object = Products.query.filter_by(id = productid).first()
@@ -233,6 +250,12 @@ def products():
 def users():
     #if current_user.admin == False:
         #return str(current_user.admin) #ERROR MESSAGE + ADD LOGIN REQUIREMENT#
+    if not current_user.is_authenticated:
+        flash("Please login to access page.")
+        return redirect(url_for('index'))
+    if current_user.admin == False:
+        flash("You don't have access to this page.")
+
     if request.method == 'POST':
         userid = request.form['usern']
         user_object = User.query.filter_by(id = userid).first()
@@ -244,6 +267,12 @@ def users():
 
 @app.route("/new_product", methods = ['GET', 'POST'])
 def new_product():
+    if not current_user.is_authenticated:
+        flash("Please login to access page.")
+        return redirect(url_for('index'))
+    if current_user.admin == False:
+        flash("You don't have access to this page.")
+
     new_productform = ProductForm()
     if new_productform.validate_on_submit():
         product = new_productform.productname.data

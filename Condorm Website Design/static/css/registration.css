@@ -1,0 +1,31 @@
+#registration-group {
+    grid-area: content;
+
+    background-color: #f2f2f2;
+    padding: 2em 2em 2em 2em;
+    width: 25em;
+    text-align: center;
+    margin: auto;
+    margin-top: 5em;
+    /*margin-bottom: 10em;*/
+    border-radius: 30px;
+}
+ /* Made the text boxes a bit wider for the registration page. */
+input[type=text], input[type=number]{
+  width: 17em;
+  padding: 12px 20px;
+  margin: 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=password]{
+  width: 17em;
+  padding: 12px 20px;
+  margin: 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

@@ -7,7 +7,7 @@
 <body>
     <div class="container">
         <div id="header" class="header-grid">
-            <h1 id="header-text">Condorm Delivery Service</h1>
+            <h1 id="header-text">Login</h1>
 
             <div id="navbar">
             <ul id="navbar-ul" class="navbar-grid">
@@ -15,7 +15,9 @@
                 {% if current_user.is_authenticated %}
                 <li id="order"><a href="order">Order</a></li>
                 {% endif %}
+                {% if not current_user.admin %}
                 <li id="about"><a href="about">About</a></li>
+                {% endif %}
                 <li id="resources"><a href="resources">Resources</a></li>
                 {% if current_user.is_authenticated %}
                 <li id="update"><a href="update">Update Information</a></li>
@@ -24,7 +26,9 @@
                 {% if not current_user.is_authenticated %}
                 <li id="login"><a href="login">Login</a></li>
                 {% endif %}
+                {% if current_user.admin %}
                 <li id="admin"><a href="admin">Admin</a></li>
+                {% endif %}
             </ul>
         </div>
         </div>
