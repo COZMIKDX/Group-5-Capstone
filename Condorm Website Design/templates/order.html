@@ -2,56 +2,57 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 </head>
 
 <body>
+<div class="container">
+    <div id="header" class="header-grid">
+            <h1 id="header-text">Order</h1>
 
-    <div class="sidebar">
-        <a href="/">Home</a>
-        {% if current_user.is_authenticated %}
-        <a href="order">Order</a>
-        {% endif %}
-        <a href="about">About</a>
-        <a href="resources">Resources</a>
-        {% if current_user.is_authenticated %}
-        <a href="update">Update Information</a>
-        <a href="logout">Logout</a>
-        {% endif %}
-        {% if not current_user.is_authenticated %}
-        <a href="login">Login</a>
-        {% endif %}
+            <div id="navbar">
+            <ul id="navbar-ul" class="navbar-grid">
+                <li id="home"><a href="/">Home</a></li>
+                {% if current_user.is_authenticated %}
+                <li id="order"><a href="order">Order</a></li>
+                {% endif %}
+                <li id="about"><a href="about">About</a></li>
+                <li id="resources"><a href="resources">Resources</a></li>
+                {% if current_user.is_authenticated %}
+                <li id="update"><a href="update">Update Information</a></li>
+                <li id="logout"><a href="logout">Logout</a></li>
+                {% endif %}
+                {% if not current_user.is_authenticated %}
+                <li id="login"><a href="login">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
     
-    <div class="header">
-        <h1>Order</h1>
-    </div>
-    
-    <div class = "products">
+    <div id="form-group">
         {% if message %}
             <h3 class="message"> {{ message | safe }}</h3>
         {% endif %}
         <form action = "/submit" method = "POST">
-            <div class = "form-group">
-                <label>Please select a product:</label>
-                    <select name = "products" id = "products" onchange = "selectChange()">
-                        {% for prod in products %}
-                        {% if prod.quantity > 0%}
-                        <option value = "{{prod.id}}">{{prod.product}}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
-                    <label for = "quantity"> Please select the quantity:
-                        <input type = "number" id = "quantity" name = "quantity" value = "1" min = "1" max = "5">
-                    </label>
-                    <!-- <div id="itemImage">
-                        <img src = {{products.0.image}} height = "200" width = "200">
-                    </div> -->
-                    <input type = "submit" value = "Place Order">
-                    <br>
-            </div>
+            <label>Please select a product:</label>
+                <select name = "products" id = "products" onchange = "selectChange()">
+                    {% for prod in products %}
+                    {% if prod.quantity > 0%}
+                    <option value = "{{prod.id}}">{{prod.product}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <label for = "quantity"> Please select the quantity:
+                    <input type = "number" id = "quantity" name = "quantity" value = "1" min = "1" max = "5">
+                </label>
+                <!-- <div id="itemImage">
+                    <img src = {{products.0.image}} height = "200" width = "200">
+                </div> -->
+                <input type = "submit" value = "Place Order">
+                <br>
         </form>
     </div>
+</div>
 
 <script>
     function selectChange(){

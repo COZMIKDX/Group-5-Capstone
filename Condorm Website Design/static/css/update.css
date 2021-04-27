@@ -1,0 +1,13 @@
+/* override the common.css button width*/
+input[type=submit] {
+  width: auto;
+  background-color: #116dcc;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: arial;
+  font-size: 14px;
+}
