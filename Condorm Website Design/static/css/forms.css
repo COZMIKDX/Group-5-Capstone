@@ -9,6 +9,7 @@
     margin-top: 5em;
     /*margin-bottom: 10em;*/
     border-radius: 30px;
+    font-family: 'Source Sans Pro', sans-serif;
 }
  /* Made the text boxes a bit wider for the registration page. */
 input[type=text], input[type=number]{
