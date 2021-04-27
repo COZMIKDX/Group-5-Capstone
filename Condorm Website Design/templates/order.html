@@ -22,40 +22,51 @@
         <a href="login">Login</a>
         {% endif %}
     </div>
-
+    
     <div class="header">
         <h1>Order</h1>
     </div>
-
+    
     <div class = "products">
         {% if message %}
             <h3 class="message"> {{ message | safe }}</h3>
         {% endif %}
         <form action = "/submit" method = "POST">
             <div class = "form-group">
-                <label for= "products"> Please select a product:</label>
-                <select name ="products" id ="products">
-                    <option value = "Condoms">Condoms</option>
-                    <option value = "Condoms">Condoms</option>
-                    <option value = "Condoms">Condoms</option>
-                </select>
+                <label>Please select a product:</label>
+                    <select name = "products" id = "products" onchange = "selectChange()">
+                        {% for prod in products %}
+                        {% if prod.quantity > 0%}
+                        <option value = "{{prod.id}}">{{prod.product}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <label for = "quantity"> Please select the quantity:
+                        <input type = "number" id = "quantity" name = "quantity" value = "1" min = "1" max = "5">
+                    </label>
+                    <!-- <div id="itemImage">
+                        <img src = {{products.0.image}} height = "200" width = "200">
+                    </div> -->
+                    <input type = "submit" value = "Place Order">
+                    <br>
             </div>
-            <div class = "form-group">
-                <label for ="quantity"> Please select the quantity:</label>
-                <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
-            </div>
-            <input type = "submit" value= "Place Order" class = "btn">
-            {% for product in products%}
-            <tr>
-                <td>
-                    {{product.product}}
-                </td>
-            </tr>
-            {% endfor %}
         </form>
     </div>
 
 <script>
+    function selectChange(){
+        var id = document.getElementById("products").value;
+        //imageSwap();
+        document.getElementById("itemImage").innerHTML = "";
+    }
+
+    function imageSwap(){
+        var selected = document.getElementById("products").selectedIndex;
+
+        var image = products.selected.image;
+        document.getElementById("itemImage").innerHTML = image;
+    }
+
     function popFunc(){
         alert("Order placed successfully!");
     }

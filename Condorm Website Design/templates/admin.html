@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+    <!-- This is a comment 
     <style>
-       * {
+    * {
         margin: 0;
       
        
@@ -20,7 +21,7 @@
             padding: 20px;
             background-color: crimson;
             color: white;
-            margin-left: 160px;
+            margin-left: 60px;
             text-align: center;
         }
         h1 {
@@ -28,9 +29,11 @@
         }
         h3 {
             text-align: center;
+            margin-left: 160px;
         }
         form {
             text-align: center;
+            margin-left: 160px;
         }
         .sidebar {
             height: 100%; /* Full-height: remove this if you want "auto" height */
@@ -54,13 +57,10 @@
             color: black;
             background-color: rgba(220, 20, 60, 0.541);
         }
-        .content {
-            margin-left: 170px;
-            text-align: left;
-        }
- 
     </style>
+    -->
 <body>
+
     <div class="sidebar">
         <a href="/">Home</a>
         {% if current_user.is_authenticated %}
@@ -78,18 +78,18 @@
     </div>
     
     <div class="header">
-        <h1>About</h1>
-    </div>
-    <div class="content">
-        <p id = "info">Condorm Delivery was intially created by a McMillion innovation team at the University of Arkansas in Fayetteville.
-            However the project was terminated in its infancy. Now our team seeks to fully realize the project that was started 
-            by the original team in an effort to create a healthier sexual lifestyle for all University of Arkansas students.
-        </p>
-        <br>
-        <p>For more information about the project please visit our <a href="https://capstone-csce.uark.edu/fall-spring-2020-2021/teams-1-5-f20/team-5-condorm-delivery/">class website.</a> On
-        this website you will find links to each team members biography, a project summary, the project proposal, a schedule for the project, and a presentation done by the team.</p>
-    </div>
+        <h1>Admin</h1>
+    <form action = "orderlist" method="GET">
+        <input type = "submit" value = "Orders List">
+    </form>
+    <form action = "products" method="GET">
+        <input type = "submit" value = "Products List">
+    </form>
+    <form action = "users" method="GET">
+        <input type = "submit" value = "Users List">
+    </form>
 
+    </div>
 
 </body>
 </html>
