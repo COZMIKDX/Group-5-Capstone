@@ -49,8 +49,10 @@
             </form>
 
             {% for prod in products %}
-                {{prod.id}}
-                {{prod.product}}
+                <p>Item ID: {{prod.id}}</p>
+                <p>Item Name: {{prod.product}}</p>
+                <p>Item Quantity: {{prod.quantity}}</p>
+                <br>
             {% endfor %}
         </div>
 
