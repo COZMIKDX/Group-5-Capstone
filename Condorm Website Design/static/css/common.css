@@ -50,7 +50,7 @@ input[type=password]{
 }
 input[type=submit] {
   width: 10em;
-  background-color: crimson;
+  background-color: #116dcc;
   color: white;
   padding: 14px 20px;
   margin: 8px;
@@ -61,7 +61,7 @@ input[type=submit] {
   font-size: 14px;
 }
 input[type=submit]:hover {
-  background-color: #b50d2e;
+  background-color: #0e5daf;
 }
 select {
   width: 17em;
@@ -77,7 +77,7 @@ select {
 .link-button {
   display: inline-block;
   text-decoration: none;
-  background-color: crimson;
+  background-color: #147fed;
   color: white;
   width: 10em;
   height: 18px;
@@ -88,13 +88,16 @@ select {
   font-family: arial;
   font-size: 14px;
 }
+.link-button:hover {
+    background-color: #0e5daf
+}
 
 /* The Main CSS Grid containing everthing */
 .container {
     display: grid;
     height: 100vh;
     grid-template-columns: 1fr;
-    grid-template-rows: 1.5r 10fr;
+    grid-template-rows: 1.5fr 10fr;
     grid-template-areas:
     "header"
     "content";

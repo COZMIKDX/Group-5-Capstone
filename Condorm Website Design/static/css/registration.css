@@ -8,7 +8,7 @@
     margin: auto;
     margin-top: 5em;
     /*margin-bottom: 10em;*/
-    border-radius: 10%;
+    border-radius: 30px;
 }
  /* Made the text boxes a bit wider for the registration page. */
 input[type=text], input[type=number]{
