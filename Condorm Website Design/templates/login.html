@@ -1,90 +1,60 @@
 <!DOCTYPE html>
 <html>
-    <style>
-        form {
-            margin-top: 40px;
-            text-align: center;
-        }
-        * {
-        margin: 0;
-      
-       
-        vertical-align: baseline;
-        background: transparent;
-    }
-        html {
-            background: linear-gradient(to bottom, beige, blanchedalmond);
-            background-size: cover;
-            background-repeat: no-repeat;
-            height: 100%;
-            width: 100%;
-        }
-        .header {
-            width: 100%;
-            padding: 20px;
-            background-color: crimson;
-            color: white;
-            
-            text-align: center;
-        }
-        h1 {
-            text-align: center;
-        }
-        .signup {
-            text-align: center;
-        }
-    </style>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
 <body>
-    
-    <div class="sidebar">
-        <a href="/">Home</a>
-        {% if current_user.is_authenticated %}
-        <a href="order">Order</a>
-        {% endif %}
-        <a href="about">About</a>
-        <a href="resources">Resources</a>
-        {% if current_user.is_authenticated %}
-        <a href="update">Update Information</a>
-        <a href="logout">Logout</a>
-        {% endif %}
-        {% if not current_user.is_authenticated %}
-        <a href="login">Login</a>
-        {% endif %}
+    <div class="container">
+        <div id="header" class="header-grid">
+            <h1 id="header-text">Condorm Delivery Service</h1>
+
+            <div id="navbar">
+            <ul id="navbar-ul" class="navbar-grid">
+                <li id="home"><a href="/">Home</a></li>
+                {% if current_user.is_authenticated %}
+                <li id="order"><a href="order">Order</a></li>
+                {% endif %}
+                <li id="about"><a href="about">About</a></li>
+                <li id="resources"><a href="resources">Resources</a></li>
+                {% if current_user.is_authenticated %}
+                <li id="update"><a href="update">Update Information</a></li>
+                <li id="logout"><a href="logout">Logout</a></li>
+                {% endif %}
+                {% if not current_user.is_authenticated %}
+                <li id="login"><a href="login">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        </div>
+        <div id="login-group">
+            {% if message %}
+            <h1 class="message"> {{ message | safe }}</h1>
+            {% endif %}
+            <form action = "login" method = "POST">
+                <div class="username">
+                    {{ form.username(class_ = 'form-control', placeholder = 'Username')}}
+
+                        {% for error in form.username.errors %}
+                        <br>{{error}}
+                        {% endfor %}
+                </div>
+                <div>
+                    {{ form.password(class_ = 'form-control', placeholder =  'Password')}}
+
+                        {% for error in form.password.errors %}
+                        <br>{{error}}
+                        {% endfor %}
+                </div>
+                <div>
+                    {{form.submitbtn}}
+                </div>
+
+                {{ form.csrf_token }}
+            </form>
+
+            <a class="link-button" href="registration">Signup</p></a>
+        </div>
     </div>
-    
-    <div class = "header">
-    <h1>Condorm Delivery Service</h1>
-    </div>
-<div class = "login">
-    {% if message %}
-    <h1 class="message"> {{ message | safe }}</h1>
-    {% endif %}
-    <form action = "login" method = "POST">
-        <div>
-            {{ form.username(class_ = 'form-control', placeholder = 'Username')}}
-
-                {% for error in form.username.errors %}
-                <br>{{error}}
-                {% endfor %}
-        </div>
-        <div>
-            {{ form.password(class_ = 'form-control', placeholder =  'Password')}}
-
-                {% for error in form.password.errors %}
-                <br>{{error}}
-                {% endfor %}
-        </div>
-        <div>
-            {{form.submitbtn}}
-        </div>
-
-        {{ form.csrf_token }}
-    </form>
-</div>
-<div class="signup">
-    <a>Don't have an account yet?</a>
-    <a href="registration">Click here to signup</p>
-</div>
-
 </body>
 </html>

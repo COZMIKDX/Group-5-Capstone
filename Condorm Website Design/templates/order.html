@@ -1,62 +1,10 @@
 <!DOCTYPE html>
 <html>
-    <style>
-    * {
-        margin: 0;
-      
-       
-        vertical-align: baseline;
-        background: transparent;
-    }
-        html {
-            background: linear-gradient(to bottom, beige, blanchedalmond);
-            background-size: cover;
-            background-repeat: no-repeat;
-            height: 100%;
-            width: 100%;
-        }
-        .header {
-            width: 100%;
-            padding: 20px;
-            background-color: crimson;
-            color: white;
-            margin-left: 60px;
-            text-align: center;
-        }
-        h1 {
-            text-align: center;
-        }
-        h3 {
-            text-align: center;
-            margin-left: 160px;
-        }
-        form {
-            text-align: center;
-            margin-left: 160px;
-        }
-        .sidebar {
-            height: 100%; /* Full-height: remove this if you want "auto" height */
-            width: 160px; /* Set the width of the sidebar */
-            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-            z-index: 1; /* Stay on top */
-            top: 0; /* Stay at the top */
-            left: 0;
-            background-color: crimson; /* Black */
-            overflow-x: hidden; /* Disable horizontal scroll */
-            padding-top: 20px;
-        }
-        .sidebar a {
-            padding: 6px 8px 6px 16px;
-            text-decoration: none;
-            font-size: 25px;
-            color: white;
-            display: block;
-        }
-        .sidebar a:hover {
-            color: black;
-            background-color: rgba(220, 20, 60, 0.541);
-        }
-    </style>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+
 <body>
 
     <div class="sidebar">
@@ -85,29 +33,40 @@
         {% endif %}
         <form action = "/submit" method = "POST">
             <div class = "form-group">
-                <label for= "products"> Please select a product:</label>
-                <select name ="products" id ="products">
-                    <option value = "Condoms">Condoms</option>
-                    <option value = "Condoms">Condoms</option>
-                    <option value = "Condoms">Condoms</option>
-                </select>
+                <label>Please select a product:</label>
+                    <select name = "products" id = "products" onchange = "selectChange()">
+                        {% for prod in products %}
+                        {% if prod.quantity > 0%}
+                        <option value = "{{prod.id}}">{{prod.product}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <label for = "quantity"> Please select the quantity:
+                        <input type = "number" id = "quantity" name = "quantity" value = "1" min = "1" max = "5">
+                    </label>
+                    <!-- <div id="itemImage">
+                        <img src = {{products.0.image}} height = "200" width = "200">
+                    </div> -->
+                    <input type = "submit" value = "Place Order">
+                    <br>
             </div>
-            <div class = "form-group">
-                <label for ="quantity"> Please select the quantity:</label>
-                <input type = "number" id = "quantity" name = "quantity" min = "1" max = "5">
-            </div>
-            <input type = "submit" value= "Place Order" class = "btn">
-            {% for product in products%}
-            <tr>
-                <td>
-                    {{product.product}}
-                </td>
-            </tr>
-            {% endfor %}
         </form>
     </div>
 
 <script>
+    function selectChange(){
+        var id = document.getElementById("products").value;
+        //imageSwap();
+        document.getElementById("itemImage").innerHTML = "";
+    }
+
+    function imageSwap(){
+        var selected = document.getElementById("products").selectedIndex;
+
+        var image = products.selected.image;
+        document.getElementById("itemImage").innerHTML = image;
+    }
+
     function popFunc(){
         alert("Order placed successfully!");
     }

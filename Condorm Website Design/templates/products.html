@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <!-- This is a comment 
+    <style>
+    * {
+        margin: 0;
+      
+       
+        vertical-align: baseline;
+        background: transparent;
+    }
+        html {
+            background: linear-gradient(to bottom, beige, blanchedalmond);
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            width: 100%;
+        }
+        .header {
+            width: 100%;
+            padding: 20px;
+            background-color: crimson;
+            color: white;
+            margin-left: 60px;
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+        }
+        h3 {
+            text-align: center;
+            margin-left: 160px;
+        }
+        form {
+            text-align: center;
+            margin-left: 160px;
+        }
+        .sidebar {
+            height: 100%; /* Full-height: remove this if you want "auto" height */
+            width: 160px; /* Set the width of the sidebar */
+            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+            z-index: 1; /* Stay on top */
+            top: 0; /* Stay at the top */
+            left: 0;
+            background-color: crimson; /* Black */
+            overflow-x: hidden; /* Disable horizontal scroll */
+            padding-top: 20px;
+        }
+        .sidebar a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: white;
+            display: block;
+        }
+        .sidebar a:hover {
+            color: black;
+            background-color: rgba(220, 20, 60, 0.541);
+        }
+    </style>
+    -->
+<body>
+
+    <div class="sidebar">
+        <a href="/">Home</a>
+        {% if current_user.is_authenticated %}
+        <a href="order">Order</a>
+        {% endif %}
+        <a href="about">About</a>
+        <a href="resources">Resources</a>
+        {% if current_user.is_authenticated %}
+        <a href="update">Update Information</a>
+        <a href="logout">Logout</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+        <a href="login">Login</a>
+        {% endif %}
+    </div>
+    
+    <div class="header">
+        <h1>Remove Products</h1>
+    </div>
+    <form action = "/products" method = "POST">
+        <label>Please select a product:</label>
+        <select name = "productn" id = "productn">
+            {% for product in products %}
+            <option value = "{{product.id}}">{{product.product}}</option>
+            {% endfor %}
+        </select>
+        <input type = "submit" value = "Remove">
+    </form>
+
+    <ul>
+    {% for prod in products %}
+        <li>
+            {{prod.id}}<br>
+            {{prod.product}}<br>
+            {{prod.quantity}}<br>
+        </li>
+    {% endfor %}
+    </ul>
+
+</body>
+</html>

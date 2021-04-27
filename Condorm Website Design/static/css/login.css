@@ -1,0 +1,21 @@
+.signup {
+    text-align: center;
+    padding: 10px;
+    margin-top: 8px;
+}
+/* Affects the div containing login info boxes, their labels, the submit button, and the signup text.*/
+#login-group {
+    grid-area: content;
+
+    background-color: #f2f2f2;
+    padding: 2em 2em 2em 2em;
+    width: 25em;
+    text-align: center;
+    margin: auto;
+    margin-top: 10em;
+    /*margin-bottom: 10em;*/
+    border-radius: 30px;
+}
+
+
+
