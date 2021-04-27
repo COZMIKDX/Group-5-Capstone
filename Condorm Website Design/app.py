@@ -22,7 +22,7 @@ if ENV == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Brad3nlive01@localhost/condorm'
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://zafiblysdeutxn:8e4232b39ad16ce2bde93eeb79cd2036e01943b33fde788521f4358ee0520145@ec2-54-164-22-242.compute-1.amazonaws.com:5432/d7dpc8egbb7s3t'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://kbqbgcqghvqwul:11d356f3b6f22a190cc58e471855f90f73bc107ae29a120e4dc245c224d8a024@ec2-52-87-107-83.compute-1.amazonaws.com:5432/davsklgj1tk9eo'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
